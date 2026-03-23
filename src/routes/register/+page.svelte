@@ -35,7 +35,7 @@
       loading = false;
       if (supaError.code === "23505") {
         error =
-          "Oh no, das kommt schon jemand mit dieser email! Meld dich bei uns, wir wollen dich ja nicht missen.";
+          "Oh no, da kommt schon jemand mit dieser Info! Meld dich bei uns, wir wollen dich ja nicht missen.";
       } else {
         error = "Oh je. Das hat nicht geklappt. Versuche es nochmal bitte.";
       }

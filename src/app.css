@@ -154,6 +154,10 @@ a {
   text-decoration: none;
 }
 
+.clip-right{
+	clip-path: polygon(0% 0%, 100% 0%, 85.5% 100%, 0% 100%)
+}
+
 /* Neon gradient text utility */
 .neon-text {
   background: linear-gradient(

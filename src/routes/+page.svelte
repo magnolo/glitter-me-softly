@@ -105,54 +105,85 @@
   </section>
 
   <!-- Info Section -->
-  <section class="px-5 pt-20 pb-30 max-w-275 mx-auto text-center">
-    <h2 class="neon-text text-4xl mb-15">What to Expect</h2>
-
-    <div
-      class="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-7 mb-20"
-    >
-      <div class="group card info-card">
-        <img src="/images/beats.jpg" alt="" class="info-card-img" />
-        <div class="info-card-overlay"></div>
-        <div class="info-card-body">
-          <h3 class="text-xl mb-3 text-neon-gold">Beats All Night</h3>
-          <p class="text-text-muted leading-7">
+  <section class="pt-32 pb-40">
+    <!-- Section 1: Beats — image left, text right -->
+	<div>
+	<div class="max-w-6xl mx-auto px-6 mb-32 md:mb-48">
+      <div class="flex flex-col md:flex-row items-start gap-8 md:gap-16 ">
+        <div class="w-full md:w-3/5 relative clip-right">
+          <img
+            src="/images/beats.jpg"
+            alt=""
+            class="w-full aspect-4/3 object-cover grayscale hover:grayscale-0 transition-all duration-700"
+          />
+          <!-- <div class="absolute inset-0 bg-neon-pink/5 mix-blend-multiply pointer-events-none"></div> -->
+        </div>
+        <div class="w-full md:w-2/5 flex flex-col justify-end md:pt-24 relative">
+          <h3 class="text-[clamp(2.5rem,5vw,4.5rem)] neon-text font-bold italic uppercase leading-[0.85] mb-6 text-foregroun -ml-[7vw]">
+            Beats all<br />night:
+          </h3>
+          <p class="text-muted-foreground text-sm md:text-base leading-relaxed max-w-sm">
             Live DJ spinning house, techno, and everything that makes you move.
-            Bass so deep your soul will vibrate.
+            Bass so deep your soul will vibrate. No requests. Just surrender.
           </p>
         </div>
       </div>
-      <div class="group card info-card">
-        <img src="/images/glitter.jpg" alt="" class="info-card-img" />
-        <div class="info-card-overlay"></div>
-        <div class="info-card-body">
-          <h3 class="text-xl mb-3 text-neon-gold">Glitter Station</h3>
-          <p class="text-text-muted leading-7">
+    </div>
+</div>
+    <!-- Section 2: Glitter — image right, text left -->
+    <div class="max-w-6xl mx-auto px-6 mb-32 md:mb-48">
+      <div class="flex flex-col md:flex-row-reverse items-start gap-8 md:gap-16">
+        <div class="w-full md:w-3/5 relative ">
+          <img
+            src="/images/glitter.jpg"
+            alt=""
+            class="w-full aspect-4/3 object-cover grayscale hover:grayscale-0 transition-all duration-700"
+          />
+          <div class="absolute inset-0 bg-neon-cyan/5 mix-blend-multiply pointer-events-none"></div>
+        </div>
+        <div class="w-full md:w-2/5 flex flex-col justify-end md:pt-24">
+          <h3 class="text-[clamp(2.5rem,5vw,4.5rem)] font-black italic uppercase leading-[0.85] mb-6 text-foreground">
+            Glitter<br />station:
+          </h3>
+          <p class="text-muted-foreground text-sm md:text-base leading-relaxed max-w-sm">
             Get glittered up at our sparkle station. Face gems, body glitter,
-            neon paint — go full rave mode.
-          </p>
-        </div>
-      </div>
-      <div class="group card info-card">
-        <img src="/images/drinks.jpg" alt="" class="info-card-img" />
-        <div class="info-card-overlay"></div>
-        <div class="info-card-body">
-          <h3 class="text-xl mb-3 text-neon-gold">Drinks & Vibes</h3>
-          <p class="text-text-muted leading-7">
-            Neon cocktails, glow-in-the-dark drinks, and good energy. Dress
-            code: the more glitter, the better.
+            neon paint — go full rave mode. Come bare, leave shining.
           </p>
         </div>
       </div>
     </div>
 
-    <div class="mt-10">
-      <p class="text-xl text-text-muted mb-6">
-        Secure your spot. Get your QR ticket.
+    <!-- Section 3: Drinks — image left, text right -->
+    <div class="max-w-6xl mx-auto px-6 mb-32 md:mb-48">
+      <div class="flex flex-col md:flex-row items-start gap-8 md:gap-16">
+        <div class="w-full md:w-3/5 relative">
+          <img
+            src="/images/drinks.jpg"
+            alt=""
+            class="w-full aspect-[4/3] object-cover grayscale hover:grayscale-0 transition-all duration-700"
+          />
+          <div class="absolute inset-0 bg-neon-purple/5 mix-blend-multiply pointer-events-none"></div>
+        </div>
+        <div class="w-full md:w-2/5 flex flex-col justify-end md:pt-24">
+          <h3 class="text-[clamp(2.5rem,5vw,4.5rem)] font-black italic uppercase leading-[0.85] mb-6 text-foreground">
+            Drinks &<br />vibes:
+          </h3>
+          <p class="text-muted-foreground text-sm md:text-base leading-relaxed max-w-sm">
+            Neon cocktails, glow-in-the-dark drinks, and good energy.
+            Dress code: the more reflective, the better.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="text-center mt-10">
+      <p class="text-muted-foreground text-sm md:text-base tracking-widest uppercase mb-8 font-mono">
+        Secure your spot. Get your QR pass.
       </p>
       <a
         href="/register"
-        class="btn-glow btn-glow-base inline-block px-12 py-4 text-lg no-underline"
+        class="btn-glow btn-glow-base inline-block px-10 py-3 text-sm no-underline"
       >
         Register Now
       </a>
