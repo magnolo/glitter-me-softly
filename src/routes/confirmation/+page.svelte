@@ -134,7 +134,7 @@
 </script>
 
 <style>
-	.ticket-shine {
+	/* .ticket-shine {
 		position: absolute;
 		top: -50%;
 		left: -50%;
@@ -142,9 +142,9 @@
 		height: 200%;
 		background: conic-gradient(from 0deg, transparent, rgba(255,0,255,0.03), transparent, rgba(0,255,255,0.03), transparent);
 		animation: ticket-shine 6s linear infinite;
-	}
+	} */
 
-	@keyframes ticket-shine {
+	/* @keyframes ticket-shine {
 		to { transform: rotate(360deg); }
-	}
+	} */
 </style>
