@@ -24,7 +24,7 @@
   <section class="relative overflow-hidden">
     <!-- Grid background -->
     <div
-      class="absolute inset-0 opacity-10"
+      class="fixed inset-0 opacity-10"
       style="
       background-image:
         linear-gradient(rgba(255,0,255,0.3) 1px, transparent 1px),
@@ -108,33 +108,13 @@
     </section>
 
     <!-- Hard Facts Section -->
-
-    <!-- Glowing orb decorations -->
-    <div
-      class="absolute top-10 right-10 w-32 h-32 rounded-full bg-neon-pink/20 blur-3xl"
-    ></div>
-    <div
-      class="absolute bottom-20 left-10 w-40 h-40 rounded-full bg-neon-cyan/15 blur-3xl"
-    ></div>
-
-    <div class="relative max-w-5xl mx-auto px-6">
-      <!-- Section title -->
-      <!-- <div class="flex items-center gap-4 mb-16">
-        <div class="text-[clamp(4rem,12vw,10rem)] font-black leading-none tracking-tighter uppercase">
-          <span class="neon-text">Hard</span>
-          <br />
-          <span class="text-foreground" style="-webkit-text-stroke: 2px rgba(255,0,255,0.6); -webkit-text-fill-color: transparent;">Facts</span>
-        </div>
-        <div class="hidden md:block ml-auto text-right">
-          <span class="text-neon-pink text-[5rem] font-black leading-none">'26</span>
-        </div>
-      </div> -->
+    <div class="relative max-w-5xl mx-auto px-6 py-16 md:py-24">
 
       <!-- Facts grid -->
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/5">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
         {#each [{ big: "1", sub: "NIGHT ONLY" }, { big: "18:00", sub: "DOORS OPEN" }, { big: "128+", sub: "BPM ALL NIGHT" }, { big: "40", sub: "YEARS OF LIGHT" }] as fact}
           <div
-            class="bg-bg-dark/80 p-6 md:p-8 text-center group hover:bg-neon-pink/5 transition-colors duration-500"
+            class="rounded-2xl border border-white/6 bg-white/2 backdrop-blur-sm p-6 md:p-8 text-center group hover:bg-neon-pink/5 transition-colors duration-500"
           >
             <div
               class="text-[clamp(2rem,5vw,3.5rem)] font-black text-foreground group-hover:neon-text transition-all duration-300 leading-none mb-2"
@@ -151,8 +131,8 @@
       </div>
 
       <!-- Bottom strip -->
-      <div class="mt-px grid grid-cols-1 md:grid-cols-2 gap-px bg-white/5">
-        <div class="bg-bg-dark/80 p-6 md:p-10 flex flex-col justify-center">
+      <div class="mt-3 md:mt-4 grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+        <div class="rounded-2xl border border-white/6 bg-white/2 backdrop-blur-sm p-6 md:p-10 flex flex-col justify-center">
           <div class="text-xs tracking-[0.3em] text-neon-cyan uppercase mb-3">
             Location
           </div>
@@ -165,7 +145,7 @@
             Spittelauerlände 12, Vienna
           </div>
         </div>
-        <div class="bg-bg-dark/80 p-6 md:p-10 flex flex-col justify-center">
+        <div class="rounded-2xl border border-white/6 bg-white/2 backdrop-blur-sm p-6 md:p-10 flex flex-col justify-center">
           <div class="text-xs tracking-[0.3em] text-neon-pink uppercase mb-3">
             Dress Code
           </div>
@@ -182,7 +162,7 @@
 
       <!-- Date banner -->
       <div
-        class="mt-12 border border-neon-pink/20 p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-4"
+        class="mt-3 md:mt-4 rounded-2xl border border-neon-pink/15 bg-neon-pink/4 backdrop-blur-sm p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-4"
       >
         <div class="text-center md:text-left">
           <div
@@ -205,62 +185,49 @@
   </section>
 
   <!-- Info Section -->
-  <section class="pt-32 pb-40">
+  <section class="pt-32 pb-40 max-w-5xl mx-auto px-6 space-y-3 md:space-y-4">
     <!-- Section 1: Beats — image left, text right -->
-    <div>
-      <div class="max-w-5xl mx-auto px-6 mb-32 md:mb-48">
-        <div class="flex flex-col md:flex-row items-start gap-8 md:gap-16">
-          <div class="w-full md:w-3/5 relative clip-right">
-            <img
-              src="/images/beats.jpg"
-              alt=""
-              class="w-full aspect-4/3 object-cover grayscale hover:grayscale-0 transition-all duration-700"
-            />
-            <!-- <div class="absolute inset-0 bg-neon-pink/5 mix-blend-multiply pointer-events-none"></div> -->
-          </div>
-          <div
-            class="w-full md:w-2/5 flex flex-col justify-end md:pt-24 relative"
+    <div class="rounded-2xl border border-white/6 bg-white/2 backdrop-blur-sm overflow-hidden">
+      <div class="flex flex-col md:flex-row items-stretch relative">
+        <div class="w-full md:w-3/5 relative clip-right  hidden md:block">
+          <img
+            src="/images/beats.jpg"
+            alt=""
+            class="w-full h-full aspect-48/9 md:aspect-auto object-cover grayscale hover:grayscale-0 transition-all duration-700"
+          />
+        </div>
+        <div class="w-full md:w-2/5 flex flex-col justify-end p-6 md:p-10">
+          <h3
+            class="md:-left-40 relative text-[clamp(2.5rem,5vw,4.5rem)] text-neon-cyan font-bold italic uppercase leading-[0.85] mb-6"
           >
-            <h3
-              class="text-[clamp(2.5rem,5vw,4.5rem)] neon-text font-bold italic uppercase leading-[0.85] mb-6 text-foregroun -ml-[7vw]"
-            >
-              Beats all<br />night:
-            </h3>
-            <p
-              class="text-muted-foreground text-sm md:text-base leading-relaxed max-w-sm"
-            >
-              Live DJ spinning house, techno, and everything that makes you
-              move. Bass so deep your soul will vibrate. No requests. Just
-              surrender.
-            </p>
-          </div>
+            Beats all<br />night:
+          </h3>
+          <p class="text-muted-foreground text-sm md:text-base leading-relaxed max-w-sm">
+            Live DJ spinning house, techno, and everything that makes you
+            move. Bass so deep your soul will vibrate. No requests. Just
+            surrender.
+          </p>
         </div>
       </div>
     </div>
+
     <!-- Section 2: Glitter — image right, text left -->
-    <div class="max-w-5xl mx-auto px-6 mb-32 md:mb-48">
-      <div
-        class="flex flex-col md:flex-row-reverse items-start gap-8 md:gap-16"
-      >
-        <div class="w-full md:w-3/5 relative">
+    <div class="rounded-2xl border border-white/6 bg-white/2 backdrop-blur-sm overflow-hidden">
+      <div class="flex flex-col md:flex-row-reverse items-stretch">
+        <div class="w-full md:w-3/5 relative clip-left  hidden md:block">
           <img
             src="/images/glitter.jpg"
             alt=""
-            class="w-full aspect-4/3 object-cover grayscale hover:grayscale-0 transition-all duration-700"
+            class="w-full h-full aspect-48/9  md:aspect-auto object-cover grayscale hover:grayscale-0 transition-all duration-700"
           />
-          <div
-            class="absolute inset-0 bg-neon-cyan/5 mix-blend-multiply pointer-events-none"
-          ></div>
         </div>
-        <div class="w-full md:w-2/5 flex flex-col justify-end md:pt-24">
+        <div class="w-full md:w-2/5 flex flex-col justify-end p-6 md:p-10">
           <h3
-            class="text-[clamp(2.5rem,5vw,4.5rem)] font-black italic uppercase leading-[0.85] mb-6 text-foreground"
+            class="md:left-40 relative z-10 text-neon-purple text-[clamp(2.5rem,5vw,4.5rem)] font-black italic uppercase leading-[0.85] mb-6"
           >
             Glitter<br />station:
           </h3>
-          <p
-            class="text-muted-foreground text-sm md:text-base leading-relaxed max-w-sm"
-          >
+          <p class="text-muted-foreground text-sm md:text-base leading-relaxed max-w-sm">
             Get glittered up at our sparkle station. Face gems, body glitter,
             neon paint — go full rave mode. Come bare, leave shining.
           </p>
@@ -269,27 +236,22 @@
     </div>
 
     <!-- Section 3: Drinks — image left, text right -->
-    <div class="max-w-5xl mx-auto px-6 mb-32 md:mb-48">
-      <div class="flex flex-col md:flex-row items-start gap-8 md:gap-16">
-        <div class="w-full md:w-3/5 relative">
+    <div class="rounded-2xl border border-white/6 bg-white/2 backdrop-blur-sm overflow-hidden">
+      <div class="flex flex-col md:flex-row items-stretch">
+        <div class="w-full md:w-3/5 relative clip-right hidden md:block">
           <img
             src="/images/drinks.jpg"
             alt=""
-            class="w-full aspect-[4/3] object-cover grayscale hover:grayscale-0 transition-all duration-700"
+            class="w-full h-full aspect-48/9 md:aspect-auto object-cover grayscale hover:grayscale-0 transition-all duration-700"
           />
-          <div
-            class="absolute inset-0 bg-neon-purple/5 mix-blend-multiply pointer-events-none"
-          ></div>
         </div>
-        <div class="w-full md:w-2/5 flex flex-col justify-end md:pt-24">
+        <div class="w-full md:w-2/5 flex flex-col justify-end p-6 md:p-10">
           <h3
-            class="text-[clamp(2.5rem,5vw,4.5rem)] font-black italic uppercase leading-[0.85] mb-6 text-foreground"
+            class="md:-left-40 text-neon-gold relative text-[clamp(2.5rem,5vw,4.5rem)] font-black italic uppercase leading-[0.85] mb-6 text-foreground"
           >
             Drinks &<br />vibes:
           </h3>
-          <p
-            class="text-muted-foreground text-sm md:text-base leading-relaxed max-w-sm"
-          >
+          <p class="text-muted-foreground text-sm md:text-base leading-relaxed max-w-sm">
             Neon cocktails, glow-in-the-dark drinks, and good energy. Dress
             code: the more reflective, the better.
           </p>
@@ -298,15 +260,13 @@
     </div>
 
     <!-- CTA -->
-    <div class="text-center mt-10">
-      <p
-        class="text-muted-foreground text-sm md:text-base tracking-widest uppercase mb-8"
-      >
+    <div class="rounded-2xl border border-neon-pink/15 bg-neon-pink/4 backdrop-blur-sm p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-4">
+      <p class="text-muted-foreground text-sm md:text-base tracking-widest uppercase">
         Secure your spot. Get your QR pass.
       </p>
       <a
         href="/register"
-        class="btn-glow btn-glow-base inline-block px-10 py-3 text-sm no-underline"
+        class="btn-glow btn-glow-base inline-block px-10 py-3 text-sm no-underline whitespace-nowrap"
       >
         Register Now
       </a>

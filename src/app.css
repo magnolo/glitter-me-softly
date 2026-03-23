@@ -155,7 +155,21 @@ a {
 }
 
 .clip-right{
-	clip-path: polygon(0% 0%, 100% 0%, 85.5% 100%, 0% 100%)
+	clip-path: none;
+}
+
+.clip-left{
+	clip-path: none;
+}
+
+@media (min-width: 768px) {
+	.clip-right{
+		clip-path: polygon(0% 0%, 100% 0%, 85.5% 100%, 0% 100%);
+	}
+
+	.clip-left{
+		clip-path: polygon(14.5% 0%, 100% 0%, 100% 100%, 0% 100%);
+	}
 }
 
 /* Neon gradient text utility */
