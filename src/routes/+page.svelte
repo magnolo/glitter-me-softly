@@ -114,10 +114,10 @@
       <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
         {#each [{ big: "1", sub: "NIGHT ONLY" }, { big: "18:00", sub: "DOORS OPEN" }, { big: "128+", sub: "BPM ALL NIGHT" }, { big: "40", sub: "YEARS OF LIGHT" }] as fact}
           <div
-            class="rounded-2xl border border-white/6 bg-white/2 backdrop-blur-sm p-6 md:p-8 text-center group hover:bg-neon-pink/5 transition-colors duration-500"
+            class="rounded border border-white/6 bg-white/2 backdrop-blur-sm p-6 md:p-8 text-center group hover:bg-neon-pink/5 transition-colors duration-500"
           >
             <div
-              class="text-[clamp(2rem,5vw,3.5rem)] font-black text-foreground group-hover:neon-text transition-all duration-300 leading-none mb-2"
+              class="text-[clamp(2rem,5vw,3.5rem)] font-black text-foreground group-hover:neon-text group-hover:animate-vibrate transition-all duration-300 leading-none mb-2"
             >
               {fact.big}
             </div>
@@ -132,7 +132,7 @@
 
       <!-- Bottom strip -->
       <div class="mt-3 md:mt-4 grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
-        <div class="rounded-2xl border border-white/6 bg-white/2 backdrop-blur-sm p-6 md:p-10 flex flex-col justify-center">
+        <div class="rounded border border-white/6 bg-white/2 backdrop-blur-sm p-6 md:p-10 flex flex-col justify-center">
           <div class="text-xs tracking-[0.3em] text-neon-cyan uppercase mb-3">
             Location
           </div>
@@ -145,7 +145,7 @@
             Spittelauerlände 12, Vienna
           </div>
         </div>
-        <div class="rounded-2xl border border-white/6 bg-white/2 backdrop-blur-sm p-6 md:p-10 flex flex-col justify-center">
+        <div class="rounded border border-white/6 bg-white/2 backdrop-blur-sm p-6 md:p-10 flex flex-col justify-center">
           <div class="text-xs tracking-[0.3em] text-neon-pink uppercase mb-3">
             Dress Code
           </div>
@@ -162,7 +162,7 @@
 
       <!-- Date banner -->
       <div
-        class="mt-3 md:mt-4 rounded-2xl border border-neon-pink/15 bg-neon-pink/4 backdrop-blur-sm p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-4"
+        class="mt-3 md:mt-4 rounded border border-neon-pink/15 bg-neon-pink/4 backdrop-blur-sm p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-4"
       >
         <div class="text-center md:text-left">
           <div
@@ -185,9 +185,9 @@
   </section>
 
   <!-- Info Section -->
-  <section class="pt-32 pb-40 max-w-5xl mx-auto px-6 space-y-3 md:space-y-4">
+  <section class="md:pt-32 pb-40 max-w-5xl mx-auto px-6 space-y-3 md:space-y-8">
     <!-- Section 1: Beats — image left, text right -->
-    <div class="rounded-2xl border border-white/6 bg-white/2 backdrop-blur-sm overflow-hidden">
+    <div class="rounded border border-white/6 bg-white/2 backdrop-blur-sm overflow-hidden">
       <div class="flex flex-col md:flex-row items-stretch relative">
         <div class="w-full md:w-3/5 relative clip-right  hidden md:block">
           <img
@@ -198,7 +198,7 @@
         </div>
         <div class="w-full md:w-2/5 flex flex-col justify-end p-6 md:p-10">
           <h3
-            class="md:-left-40 relative text-[clamp(2.5rem,5vw,4.5rem)] text-neon-cyan font-bold italic uppercase leading-[0.85] mb-6"
+            class="md:-left-40 relative text-[clamp(2.5rem,5vw,4.5rem)] text-neon-cyan font-bold italic uppercase leading-[0.85] mb-6 "
           >
             Beats all<br />night:
           </h3>
@@ -212,7 +212,7 @@
     </div>
 
     <!-- Section 2: Glitter — image right, text left -->
-    <div class="rounded-2xl border border-white/6 bg-white/2 backdrop-blur-sm overflow-hidden">
+    <div class="rounded border border-white/6 bg-white/2 backdrop-blur-sm overflow-hidden">
       <div class="flex flex-col md:flex-row-reverse items-stretch">
         <div class="w-full md:w-3/5 relative clip-left  hidden md:block">
           <img
@@ -223,7 +223,7 @@
         </div>
         <div class="w-full md:w-2/5 flex flex-col justify-end p-6 md:p-10">
           <h3
-            class="md:left-40 relative z-10 text-neon-purple text-[clamp(2.5rem,5vw,4.5rem)] font-black italic uppercase leading-[0.85] mb-6"
+            class="md:left-40 relative z-10 text-neon-purple text-[clamp(2.5rem,5vw,4.5rem)] font-black italic uppercase leading-[0.85] mb-6 "
           >
             Glitter<br />station:
           </h3>
@@ -236,7 +236,7 @@
     </div>
 
     <!-- Section 3: Drinks — image left, text right -->
-    <div class="rounded-2xl border border-white/6 bg-white/2 backdrop-blur-sm overflow-hidden">
+    <div class="rounded border border-white/6 bg-white/2 backdrop-blur-sm overflow-hidden">
       <div class="flex flex-col md:flex-row items-stretch">
         <div class="w-full md:w-3/5 relative clip-right hidden md:block">
           <img
@@ -247,7 +247,7 @@
         </div>
         <div class="w-full md:w-2/5 flex flex-col justify-end p-6 md:p-10">
           <h3
-            class="md:-left-40 text-neon-gold relative text-[clamp(2.5rem,5vw,4.5rem)] font-black italic uppercase leading-[0.85] mb-6 text-foreground"
+            class="md:-left-40 text-neon-gold relative text-[clamp(2.5rem,5vw,4.5rem)] font-black italic uppercase leading-[0.85] mb-6"
           >
             Drinks &<br />vibes:
           </h3>
@@ -260,7 +260,7 @@
     </div>
 
     <!-- CTA -->
-    <div class="rounded-2xl border border-neon-pink/15 bg-neon-pink/4 backdrop-blur-sm p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-4">
+    <div class="rounded border border-neon-pink/15 bg-neon-pink/4 backdrop-blur-sm p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-4">
       <p class="text-muted-foreground text-sm md:text-base tracking-widest uppercase">
         Secure your spot. Get your QR pass.
       </p>

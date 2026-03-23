@@ -28,6 +28,7 @@
   --animate-spinner: spinner 0.8s linear infinite;
   --animate-ticket-shine: ticket-shine 6s linear infinite;
   --animate-qr-pulse: qr-pulse 3s ease-in-out infinite;
+  --animate-vibrate: vibrate 0.15s linear infinite;
 }
 
 @keyframes shimmer {
@@ -118,6 +119,27 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+@keyframes vibrate {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-1px, 1px); }
+  40% { transform: translate(1px, -1px); }
+  60% { transform: translate(-1px, -1px); }
+  80% { transform: translate(1px, 1px); }
+  100% { transform: translate(0, 0); }
+}
+
+.vibrate-text {
+  animation: var(--animate-vibrate);
+  display: inline-block;
+}
+
+.vibrate-text:hover {
+  animation: vibrate 0.08s linear infinite;
+  text-shadow:
+    0 0 10px currentColor,
+    0 0 20px currentColor;
 }
 
 /* Base styles */
@@ -219,7 +241,7 @@ a {
     var(--color-neon-purple)
     var(--color-neon-cyan), 
   );
-  border-radius: 12px;
+  border-radius: 4px;
   z-index: -1;
   animation: var(--animate-shimmer-fast);
   background-size: 400% 400%;
@@ -379,12 +401,11 @@ select option {
 }
 
 @utility btn-glow-base {
-  /* font-family: var(--font-orbitron); */
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 3px;
   color: #fff;
-  border-radius: 6px;
+  border-radius: 2px;
   cursor: pointer;
   transition: all 0.3s ease;
 }
