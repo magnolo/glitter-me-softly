@@ -69,12 +69,8 @@
       </div>
 
       <!-- Right: form -->
-      <div>
-        {#if error}
-          <div class="border border-red-500/30 text-red-400 px-5 py-3.5 mb-8 text-sm">
-            {error}
-          </div>
-        {/if}
+      <div class="p-4 backdrop-blur-3xl">
+
 
         <form onsubmit={handleSubmit} class="space-y-6">
           <div>
@@ -111,7 +107,7 @@
               class="w-full py-3 px-0 text-white bg-transparent border-0 border-b border-white/10 focus:border-neon-pink focus:shadow-none outline-none transition-colors resize-none"
             ></textarea>
           </div>
-
+       
           <button
             type="submit"
             class="btn-glow btn-glow-base w-full mt-4 py-4 text-sm disabled:opacity-40 disabled:cursor-not-allowed"
@@ -120,6 +116,11 @@
             {loading ? "Submitting..." : "Get My QR Ticket ✦"}
           </button>
         </form>
+         {#if error}
+          <div class="border border-red-500/30 text-red-400 px-5 py-3.5 mt-8 text-sm">
+            {error}
+          </div>
+        {/if}
       </div>
     </div>
   </div>

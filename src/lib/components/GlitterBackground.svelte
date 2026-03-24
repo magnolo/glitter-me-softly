@@ -21,8 +21,10 @@
 		}
 
 		const colors = [
-		'#ff1493',
 
+	'#ff00ff', '#ff69b4',  '#ff1493',
+	
+	
 		];
 
 		function resize() {
