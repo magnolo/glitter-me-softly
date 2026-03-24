@@ -21,9 +21,8 @@
 		}
 
 		const colors = [
-			'#ff00ff', '#ff69b4', '#ffb6c1', '#ffd700', '#ff1493',
-			'#00ffff', '#7b68ee', '#ff6ec7', '#fff', '#c0c0ff',
-			'#ffc0cb', '#e0b0ff', '#ff00ff', '#00ff88', '#ffdf00'
+		'#ff1493',
+
 		];
 
 		function resize() {
@@ -46,7 +45,7 @@
 		}
 
 		function init() {
-			for (let i = 0; i < 50; i++) {
+			for (let i = 0; i < 150; i++) {
 				const p = createParticle();
 				p.y = Math.random() * canvas.height;
 				particles.push(p);

@@ -29,6 +29,8 @@
   --animate-ticket-shine: ticket-shine 6s linear infinite;
   --animate-qr-pulse: qr-pulse 3s ease-in-out infinite;
   --animate-vibrate: vibrate 0.15s linear infinite;
+  --animate-sparkle: sparkle 4s ease-in-out infinite;
+  --animate-glitter-shift: glitter-shift 8s ease infinite;
 }
 
 @keyframes shimmer {
@@ -142,6 +144,113 @@
     0 0 20px currentColor;
 }
 
+/* ── Glitter effects ── */
+
+@keyframes sparkle {
+  0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1) rotate(180deg); }
+}
+
+@keyframes glitter-shift {
+  0% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
+  100% { background-position: 0% 0%; }
+}
+
+/* Glitter noise overlay — uses SVG feTurbulence filter */
+.glitter-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  filter: url(#glitter-noise);
+  opacity: 0.08;
+  mix-blend-mode: screen;
+  background: white;
+  animation: glitter-flicker 0.15s steps(2) infinite;
+}
+
+@keyframes glitter-flicker {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(-2px, -1px); }
+  100% { transform: translate(1px, 2px); }
+}
+
+/* Glitter text — gold sparkle fill like the reference image */
+.glitter-text {
+  background: linear-gradient(
+    135deg,
+    #ffd700 0%,
+    #ffec80 15%,
+    #c8a000 25%,
+    #fff8c0 35%,
+    #ffd700 45%,
+    #b8860b 55%,
+    #ffec80 65%,
+    #ffd700 75%,
+    #fff8c0 85%,
+    #c8a000 100%
+  );
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: glitter-shift 4s ease infinite;
+  filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.4)) drop-shadow(0 0 20px rgba(255, 215, 0, 0.2));
+}
+
+/* Pink glitter variant */
+.glitter-text-pink {
+  background: linear-gradient(
+    135deg,
+    #ff00ff 0%,
+    #ff80ff 15%,
+    #cc00cc 25%,
+    #ffb3ff 35%,
+    #ff00ff 45%,
+    #990099 55%,
+    #ff80ff 65%,
+    #ff00ff 75%,
+    #ffb3ff 85%,
+    #cc00cc 100%
+  );
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: glitter-shift 4s ease infinite;
+  filter: drop-shadow(0 0 8px rgba(255, 0, 255, 0.4)) drop-shadow(0 0 20px rgba(255, 0, 255, 0.2));
+}
+
+/* Glitter border shimmer for cards */
+.glitter-border {
+  position: relative;
+}
+
+.glitter-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    transparent 20%,
+    rgba(255, 215, 0, 0.3) 30%,
+    transparent 40%,
+    rgba(255, 0, 255, 0.2) 50%,
+    transparent 60%,
+    rgba(0, 255, 255, 0.3) 70%,
+    transparent 80%
+  );
+  background-size: 300% 300%;
+  animation: glitter-shift 5s ease infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
 /* Base styles */
 body {
   font-family: var(--font-outfit);
@@ -216,43 +325,62 @@ a {
   animation: var(--animate-btn-shimmer);
 }
 
-/* Button glow */
+/* Button glow — outlined with animated neon border */
 .btn-glow {
-  background: linear-gradient(
-    135deg,
-    var(--color-neon-pink),
-    var(--color-neon-purple)
-  );
   position: relative;
-  overflow: hidden;
-  @apply text-black;
+  background: transparent;
+  color: #fff;
+  border: none;
+  z-index: 0;
 }
 
 .btn-glow::before {
   content: "";
   position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    var(--color-neon-pink),
+    var(--color-neon-cyan),
+    var(--color-neon-purple),
+    var(--color-neon-pink)
+  );
+  background-size: 300% 300%;
+  animation: glitter-shift 4s ease infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  z-index: -1;
+}
+
+.btn-glow::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
   background: linear-gradient(
     135deg,
     var(--color-neon-pink),
     var(--color-neon-purple)
-    var(--color-neon-cyan), 
   );
-  border-radius: 4px;
+  opacity: 0;
   z-index: -1;
-  animation: var(--animate-shimmer-fast);
-  background-size: 400% 400%;
+  transition: opacity 0.3s ease;
 }
 
 .btn-glow:hover {
   transform: translateY(-2px);
+  color: #fff;
   box-shadow:
-    0 0 20px rgba(255, 0, 255, 0.5),
-    0 0 40px rgba(255, 0, 255, 0.3),
-    0 0 60px rgba(255, 0, 255, 0.1);
+    0 0 20px rgba(255, 0, 255, 0.4),
+    0 0 40px rgba(255, 0, 255, 0.2),
+    0 0 80px rgba(255, 0, 255, 0.1);
+}
+
+.btn-glow:hover::after {
+  opacity: 1;
 }
 
 .btn-glow:active {
