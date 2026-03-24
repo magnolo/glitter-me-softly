@@ -113,7 +113,7 @@
     <div class="absolute inset-0 bg-linear-to-r from-black/80 via-black/50 to-transparent"></div>
     <div class="relative z-10 h-full flex items-end px-6 md:px-16 py-12 md:py-20">
       <div class="max-w-7xl mx-auto w-full">
-        <h3 class="text-[clamp(2rem,5vw,4.5rem)] font-black text-white uppercase leading-[0.85] mb-4">
+        <h3 class="text-[clamp(2rem,5vw,4.5rem)] font-black text-neon-pink uppercase leading-[0.85] mb-4">
           Beats<br />all night
         </h3>
         <p class="text-white/60 text-sm leading-relaxed max-w-sm">
@@ -149,7 +149,7 @@
     <div class="absolute inset-0 bg-linear-to-r from-black/80 via-black/50 to-transparent"></div>
     <div class="relative z-10 h-full flex items-end px-6 md:px-16 py-12 md:py-20">
       <div class="max-w-7xl mx-auto w-full">
-        <h3 class="text-[clamp(2rem,5vw,4.5rem)] font-black text-white uppercase leading-[0.85] mb-4">
+        <h3 class="text-[clamp(2rem,5vw,4.5rem)] font-black text-neon-pink  uppercase leading-[0.85] mb-4">
           Drinks<br />& vibes
         </h3>
         <p class="text-white/60 text-sm leading-relaxed max-w-sm">

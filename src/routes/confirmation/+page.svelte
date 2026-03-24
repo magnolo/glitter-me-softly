@@ -102,9 +102,9 @@
             Your ticket
           </p>
           <h1
-            class="text-[clamp(3rem,8vw,6rem)] font-black uppercase leading-[0.85] tracking-[-0.04em] text-neon-pink mb-8"
+            class="text-[clamp(3rem,8vw,6rem)] font-black uppercase leading-[0.85] tracking-[-0.04em] neon-text mb-8"
           >
-            You're<br />in
+            You're in
           </h1>
 
           <div class="space-y-4 border-t border-white/10 pt-6">

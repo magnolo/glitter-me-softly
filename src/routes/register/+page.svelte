@@ -22,7 +22,7 @@
       .insert({
         name,
         email,
-        phone: phone || null,
+        //phone: phone || null,
         message: message || null,
       })
       .select()
@@ -60,7 +60,7 @@
         <p class="text-xs tracking-[0.4em] text-white/40 uppercase mb-6">
           Registration
         </p>
-        <h1 class="text-[clamp(3rem,8vw,6rem)] font-black uppercase leading-[0.85] tracking-[-0.04em] text-neon-pink">
+        <h1 class="text-[clamp(3rem,8vw,6rem)] font-black uppercase leading-[0.85] tracking-[-0.04em] neon-text">
           Get on<br />the list
         </h1>
         <p class="text-white/50 text-sm md:text-base max-w-xs leading-relaxed mt-6">
