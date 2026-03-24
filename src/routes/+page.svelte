@@ -48,7 +48,7 @@
         </p>
         <a
           href="/register"
-          class="btn-glow btn-glow-base inline-block py-3 px-8 text-xs no-underline"
+          class="btn-glow btn-glow-base py-3 px-8 text-xs no-underline max-w-max flex"
         >
           Get your pass ✦
         </a>
@@ -102,7 +102,7 @@
   </section>
 
   <!-- Beats — image section -->
-  <section class="relative h-screen overflow-hidden">
+  <section class="relative min-h-[50vh] md:h-screen overflow-hidden">
     <img
       src="/images/beats.jpg"
       alt="DJ and beats"
@@ -125,7 +125,7 @@
   </section>
 
   <!-- Glitter — plain text section -->
-  <section class="relative z-10 min-h-screen flex items-end bg-bg-dark px-6 md:px-16 py-12 md:py-20">
+  <section class="relative z-10  min-h-[50vh] md:h-screen flex items-end bg-bg-dark px-6 md:px-16 py-12 md:py-20">
     <div class="max-w-7xl mx-auto w-full flex flex-col items-end text-right">
       <h3 class="text-[clamp(2.5rem,6vw,5rem)] font-black text-neon-pink uppercase leading-[0.85] mb-4">
         Glitter<br />station
@@ -138,7 +138,7 @@
   </section>
 
   <!-- Drinks — image section -->
-  <section class="relative h-screen overflow-hidden">
+  <section class="relative min-h-[50vh] md:h-screen overflow-hidden">
     <img
       src="/images/drinks.jpg"
       alt="Drinks and vibes"
