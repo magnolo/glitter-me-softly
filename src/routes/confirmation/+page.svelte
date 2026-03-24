@@ -64,6 +64,30 @@
       link.click();
     }
   }
+
+  function downloadCalendar() {
+    const event = [
+      "BEGIN:VCALENDAR",
+      "VERSION:2.0",
+      "PRODID:-//GlitterMeSoftly//EN",
+      "BEGIN:VEVENT",
+      "DTSTART:20260424T160000Z",
+      "DTEND:20260425T020000Z",
+      "SUMMARY:Glitter Me Softly",
+      "LOCATION:DAKS\\, Spittelauerlände 12\\, Vienna",
+      "DESCRIPTION:Four decades of light. One night of sound. Dress reflective. Dance until dawn.",
+      "END:VEVENT",
+      "END:VCALENDAR",
+    ].join("\r\n");
+
+    const blob = new Blob([event], { type: "text/calendar;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "glitter-me-softly.ics";
+    link.click();
+    URL.revokeObjectURL(url);
+  }
 </script>
 
 <div class="min-h-screen flex flex-col justify-center px-6 md:px-16 py-20">
@@ -167,12 +191,32 @@
           <p class="text-white/40 text-xs tracking-[0.3em] uppercase mb-6">
             Show this at the door
           </p>
-          <button
-            class="btn-glow btn-glow-base py-3 px-8 text-xs"
-            onclick={() => downloadQR()}
-          >
-            Download QR ✦
-          </button>
+          <div class="flex flex-col gap-3 w-full max-w-xs">
+            <button
+              class="btn-glow btn-glow-base py-3 px-8 text-xs w-full"
+              onclick={() => downloadQR()}
+            >
+              Download QR ✦
+            </button>
+            <button
+              class="btn-glow btn-glow-base py-3 px-8 text-xs w-full"
+              onclick={() => downloadCalendar()}
+            >
+              Add to Calendar
+            </button>
+            <!-- <a
+              href="/api/wallet/apple?id={registration.id}"
+              class="btn-glow btn-glow-base py-3 px-8 text-xs w-full text-center no-underline"
+            >
+              Add to Apple Wallet
+            </a>
+            <a
+              href="/api/wallet/google?id={registration.id}"
+              class="btn-glow btn-glow-base py-3 px-8 text-xs w-full text-center no-underline"
+            >
+              Add to Google Wallet
+            </a> -->
+          </div>
         </div>
       </div>
 

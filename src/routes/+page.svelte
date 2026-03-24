@@ -70,7 +70,7 @@
       <div class="mt-8 flex flex-col md:flex-row md:items-end gap-6 md:gap-16">
         <p class="text-white/80 text-sm md:text-base max-w-xs leading-relaxed">
           Four decades of light. One night of sound. Dress reflective. Dance
-          until dawn.
+          like noone is watching.
         </p>
         <a
           href="/register"
@@ -206,14 +206,14 @@
 
   <!-- Beats — image section -->
   <section
-    class="relative z-10 min-h-[50vh] md:h-[60vh] flex items-end px-6 md:px-16 py-12 md:py-20"
+    class="relative z-10 min-h-[50vh] md:h-[60vh] flex items-end px-6 md:px-16 py-12 md:py-20 overflow-hidden"
   >
-    <!-- <img
+    <img
       src="/images/beats.jpg"
       alt="DJ and beats"
-      class="parallax-img absolute inset-0 w-full h-[140%] object-cover grayscale -top-[20%]"
+      class="parallax-img absolute inset-0 w-full h-[140%] object-cover grayscale -top-[20%] opacity-20"
       style="will-change: transform;"
-    /> -->
+    />
     <!-- <div
       class="absolute inset-0 bg-neon-pink/20 mix-blend-color pointer-events-none"
     ></div> -->
@@ -242,8 +242,14 @@
 
   <!-- Glitter — plain text section -->
   <section
-    class="relative z-10 min-h-[50vh] md:h-[60vh] flex items-end px-6 md:px-16 py-12 md:py-20"
+    class="relative z-10 min-h-[50vh] md:h-[60vh] flex items-end px-6 md:px-16 py-12 md:py-20 overflow-hidden"
   >
+   <img
+      src="/images/glitter.jpg"
+      alt="Drinks and vibes"
+      class="parallax-img absolute inset-0 w-full h-[120%] object-cover grayscale -top-[10%] opacity-5"
+      style="will-change: transform;"
+    />
     <div class="max-w-7xl mx-auto w-full flex flex-col items-end text-right">
       <h3
         class="text-[clamp(2.5rem,6vw,8rem)] font-black text-neon-pink uppercase leading-[0.85] mb-4"
@@ -261,14 +267,14 @@
 
   <!-- Drinks — image section -->
   <section
-    class="relative z-10 min-h-[50vh] md:h-[60vh] flex items-end px-6 md:px-16 py-12 md:py-20"
+    class="relative z-10 min-h-[50vh] md:h-[60vh] flex items-end px-6 md:px-16 py-12 md:py-20 overflow-hidden"
   >
-    <!-- <img
+    <img
       src="/images/drinks.jpg"
       alt="Drinks and vibes"
-      class="parallax-img absolute inset-0 w-full h-[120%] object-cover grayscale -top-[10%]"
+      class="parallax-img absolute inset-0 w-full h-[120%] object-cover grayscale -top-[10%] opacity-20"
       style="will-change: transform;"
-    /> -->
+    />
     <div
       class="absolute inset-0 bg-neon-pink/20 mix-blend-color pointer-events-none"
     ></div>

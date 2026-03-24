@@ -79,7 +79,7 @@
               id="name"
               type="text"
               bind:value={name}
-              placeholder="Wie sollen wir dich nennen?"
+              placeholder="How should we call you?"
               required
               class="w-full py-3 px-0 text-white text-lg bg-transparent border-0 border-b border-white/10 focus:border-neon-pink focus:shadow-none outline-none transition-colors"
             />
@@ -91,18 +91,18 @@
               id="email"
               type="email"
               bind:value={email}
-              placeholder="deine@email.com"
+              placeholder="your@email.com"
               required
               class="w-full py-3 px-0 text-white text-lg bg-transparent border-0 border-b border-white/10 focus:border-neon-pink focus:shadow-none outline-none transition-colors"
             />
           </div>
 
           <div>
-            <label for="message" class="text-xs tracking-[0.3em] text-white/40 uppercase block mb-2">Nachricht (optional)</label>
+            <label for="message" class="text-xs tracking-[0.3em] text-white/40 uppercase block mb-2">Message (optional)</label>
             <textarea
               id="message"
               bind:value={message}
-              placeholder="Noch etwas, dass wir wissen sollten..."
+              placeholder="Something we should know about..."
               rows="3"
               class="w-full py-3 px-0 text-white bg-transparent border-0 border-b border-white/10 focus:border-neon-pink focus:shadow-none outline-none transition-colors resize-none"
             ></textarea>
