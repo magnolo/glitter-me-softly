@@ -16,7 +16,7 @@
   <title>Glitter Me Softly - Rave Birthday Party</title>
   <meta
     name="description"
-    content="You're invited to the most glittery rave birthday party ever!"
+    content="A night of sparkle & love. You're invited to the most glittery rave birthday party ever!"
   />
 </svelte:head>
 
