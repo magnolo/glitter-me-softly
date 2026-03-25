@@ -32,9 +32,9 @@
       loading = false;
       if (supaError.code === "23505") {
         error =
-          "Oh no, da kommt schon jemand mit dieser Info! Meld dich bei uns, wir wollen dich ja nicht missen.";
+          "Are you on the list? If we are mistaken, please contact us";
       } else {
-        error = "Oh je. Das hat nicht geklappt. Versuche es nochmal bitte.";
+        error = "Oh no. That didnt worked out. Please try again.";
       }
       return;
     }
@@ -60,19 +60,19 @@
         <p class="text-xs tracking-[0.4em] text-white/40 uppercase mb-6">
           Registration
         </p>
-        <h1 class="text-[clamp(3rem,8vw,6rem)] font-black uppercase leading-[0.85] tracking-[-0.04em] neon-text">
-          Get on<br />the list
+        <h1 class="max-w-md text-[clamp(3rem,8vw,6rem)] font-black uppercase leading-[0.85] tracking-[-0.04em] neon-text">
+          Get on the list
         </h1>
-        <p class="text-white/50 text-sm md:text-base max-w-xs leading-relaxed mt-6">
+        <p class="text-white/80 text-sm md:text-base max-w-xs leading-relaxed mt-6">
           Claim your spot on the dance floor. Your QR ticket will be generated instantly.
         </p>
       </div>
 
       <!-- Right: form -->
-      <div class="p-4 backdrop-blur-3xl">
+      <div class="p-4 backdrop-blur-3xl realative">
+        <!-- <div class="absolute inset-0  bg-linear-to-l from-neon-purple/5 to-neon-pink/5  pointer-events-none"></div> -->
 
-
-        <form onsubmit={handleSubmit} class="space-y-6">
+        <form onsubmit={handleSubmit} class="space-y-6 relative z-10">
           <div>
             <label for="name" class="text-xs tracking-[0.3em] text-white/40 uppercase block mb-2">Name *</label>
             <input

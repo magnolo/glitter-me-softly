@@ -403,7 +403,8 @@ select,
 textarea {
   font-family: var(--font-quicksand);
   color: #fff;
-  background: rgba(255, 255, 255, 0.01);
+  /* background: rgba(255, 255, 255, 0.01); */
+   @apply bg-neon-pink/10;
   border: 1px solid rgba(255, 0, 255, 0.1);
   outline: none;
   transition: all 0.3s ease;
