@@ -8,7 +8,7 @@
   const djs = [
         {
       name: "yassi puls4ra",
-      url: "https://soundcloud.com/yassi_puls4ra",
+      url: "https://soundcloud.com/yassi_puls4ra/resistanz-festival-2023",
       color: "pink",
     },
     {
@@ -18,10 +18,9 @@
     },
     {
       name: "fivesixsevenkate",
-      url: "https://soundcloud.com/fivesixsevenkate",
+      url: "https://soundcloud.com/diskoanimale/fivesixsevenkate-kramladen-diskoanimale-240323",
       color: "pink",
     },
-
     { name: "Dj iSi", url: null, color: "white" },
   ];
 
@@ -147,7 +146,7 @@
 
   <!-- DJ Lineup — plain text section -->
   <section
-    class="relative z-10 min-h-[50vh] md:h-[60vh] flex items-center justify-center px-6 md:px-16 py-12 md:py-20"
+    class="relative z-10 min-h-[50vh] md:min-h-[60vh] flex items-center justify-center px-6 md:px-16 py-12 md:py-20"
   >
     <!-- <div
       class="absolute inset-0 bg-linear-to-l from-black/80 via-black/50 to-transparent"
