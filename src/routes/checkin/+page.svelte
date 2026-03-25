@@ -1,30 +1,31 @@
 <script lang="ts">
-  import { onMount } from "svelte";
   import { supabase } from "$lib/supabase";
 
   let videoEl = $state<HTMLVideoElement | undefined>(undefined);
   let canvasEl = $state<HTMLCanvasElement | undefined>(undefined);
-  let scanning = $state(true);
-  let status = $state<"scanning" | "success" | "already" | "notfound">("scanning");
+  let scanning = $state(false);
+  let status = $state<"idle" | "scanning" | "success" | "already" | "notfound">("idle");
   let guestName = $state("");
   let message = $state("");
 
-  onMount(async () => {
-    // Dynamically import jsQR (lightweight QR scanner)
+  async function startScanning() {
+    status = "scanning";
+    scanning = true;
+
     const { default: jsQR } = await import("jsqr");
 
     const stream = await navigator.mediaDevices.getUserMedia({
       video: { facingMode: "environment" },
     });
 
-    if(!videoEl) return;
+    if (!videoEl || !canvasEl) return;
     videoEl.srcObject = stream;
     await videoEl.play();
 
     const ctx = canvasEl.getContext("2d")!;
 
     function tick() {
-      if (!scanning) return;
+      if (!scanning || !videoEl || !canvasEl) return;
 
       if (videoEl.readyState === videoEl.HAVE_ENOUGH_DATA) {
         canvasEl.width = videoEl.videoWidth;
@@ -34,6 +35,7 @@
         const code = jsQR(imageData.data, imageData.width, imageData.height);
 
         if (code) {
+          stream.getTracks().forEach((t) => t.stop());
           handleScan(code.data);
           return;
         }
@@ -43,12 +45,7 @@
     }
 
     requestAnimationFrame(tick);
-
-    return () => {
-      scanning = false;
-      stream.getTracks().forEach((t) => t.stop());
-    };
-  });
+  }
 
   async function handleScan(data: string) {
     scanning = false;
@@ -109,39 +106,10 @@
 
   function reset() {
     status = "scanning";
-    scanning = true;
+    scanning = false;
     guestName = "";
     message = "";
-    // Restart camera
-    navigator.mediaDevices
-      .getUserMedia({ video: { facingMode: "environment" } })
-      .then((stream) => {
-        videoEl.srcObject = stream;
-        videoEl.play();
-
-        const ctx = canvasEl.getContext("2d")!;
-        let jsQRModule: typeof import("jsqr")["default"];
-        import("jsqr").then((mod) => {
-          jsQRModule = mod.default;
-
-          function tick() {
-            if (!scanning) return;
-            if (videoEl.readyState === videoEl.HAVE_ENOUGH_DATA) {
-              canvasEl.width = videoEl.videoWidth;
-              canvasEl.height = videoEl.videoHeight;
-              ctx.drawImage(videoEl, 0, 0, canvasEl.width, canvasEl.height);
-              const imageData = ctx.getImageData(0, 0, canvasEl.width, canvasEl.height);
-              const code = jsQRModule(imageData.data, imageData.width, imageData.height);
-              if (code) {
-                handleScan(code.data);
-                return;
-              }
-            }
-            requestAnimationFrame(tick);
-          }
-          requestAnimationFrame(tick);
-        });
-      });
+    startScanning();
   }
 </script>
 
@@ -149,9 +117,23 @@
   class="fixed inset-0 flex flex-col items-center justify-center transition-colors duration-500"
   class:bg-green-600={status === "success"}
   class:bg-red-600={status === "already" || status === "notfound"}
-  class:bg-bg-dark={status === "scanning"}
+  class:bg-bg-dark={status === "idle" || status === "scanning"}
 >
-  {#if status === "scanning"}
+  {#if status === "idle"}
+    <p class="text-xs tracking-[0.4em] text-white/40 uppercase mb-6">
+      Check-in
+    </p>
+    <h1 class="text-[clamp(2rem,6vw,4rem)] font-black text-white uppercase leading-[0.85] mb-10 text-center px-6">
+      Glitter<br />Me Softly
+    </h1>
+    <button
+      class="btn-glow btn-glow-base py-4 px-12 text-sm"
+      onclick={() => startScanning()}
+    >
+      Start scanning
+    </button>
+
+  {:else if status === "scanning"}
     <p class="text-xs tracking-[0.4em] text-white/40 uppercase mb-6">
       Check-in
     </p>
@@ -159,15 +141,14 @@
       Scan QR
     </h1>
     <div class="relative w-[80vw] max-w-sm aspect-square border border-white/20 overflow-hidden">
-      <!-- svelte-ignore element_invalid_self_closing_tag -->
-      <video bind:this={videoEl} class="absolute inset-0 w-full h-full object-cover" playsinline muted />
+      <video bind:this={videoEl} class="absolute inset-0 w-full h-full object-cover" playsinline muted></video>
       <canvas bind:this={canvasEl} class="hidden"></canvas>
-      <!-- Scan overlay corners -->
       <div class="absolute inset-4 border-2 border-white/30 pointer-events-none"></div>
     </div>
     <p class="text-white/40 text-sm mt-6 tracking-[0.2em] uppercase">
       Point camera at ticket
     </p>
+
   {:else}
     <div class="text-center px-6">
       {#if status === "success"}
@@ -181,7 +162,7 @@
       </h1>
 
       {#if guestName}
-        <p class="text-white/80 text-[clamp(2rem,8vw,5rem)]  font-bold uppercase tracking-wide mb-8">
+        <p class="text-white/80 text-[clamp(2rem,8vw,5rem)] font-bold uppercase tracking-wide mb-8">
           {guestName}
         </p>
       {/if}
