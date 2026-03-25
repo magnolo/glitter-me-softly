@@ -72,10 +72,10 @@
       "PRODID:-//GlitterMeSoftly//EN",
       "BEGIN:VEVENT",
       "DTSTART:20260424T160000Z",
-      "DTEND:20260425T020000Z",
+      "DTEND:20260425T000000Z",
       "SUMMARY:Glitter Me Softly",
       "LOCATION:DAKS\\, Spittelauerlände 12\\, Vienna",
-      "DESCRIPTION:Four decades of light. One night of sound. Dress reflective. Dance until dawn.",
+      "DESCRIPTION:A night of sparkle & love.",
       "END:VEVENT",
       "END:VCALENDAR",
     ].join("\r\n");
@@ -141,6 +141,7 @@
                 >{registration.name}</span
               >
             </div>
+             {#if registration.email}
             <div
               class="flex justify-between items-baseline border-t border-white/5 pt-4"
             >
@@ -152,6 +153,7 @@
                 >{registration.email}</span
               >
             </div>
+            {/if}
             {#if registration.plus_one}
               <div
                 class="flex justify-between items-baseline border-t border-white/5 pt-4"
