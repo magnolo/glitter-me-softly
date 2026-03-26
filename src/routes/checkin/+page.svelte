@@ -50,7 +50,7 @@
   async function handleScan(data: string) {
     scanning = false;
 
-    let parsed: { id?: string; name?: string; email?: string };
+    let parsed: { id: string; name: string; email?: string };
 
     try {
       parsed = JSON.parse(data);
@@ -60,7 +60,7 @@
       return;
     }
 
-    if (!parsed.id) {
+    if (!parsed.id && !parsed.name) {
       status = "notfound";
       message = "No registration ID in QR code";
       return;

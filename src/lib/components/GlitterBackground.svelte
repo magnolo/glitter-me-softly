@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
+	let {zIndex} = $props();
+
 	let canvas: HTMLCanvasElement;
 
 	onMount(() => {
@@ -118,4 +120,4 @@
 	});
 </script>
 
-<canvas bind:this={canvas} class="fixed inset-0 w-full h-full pointer-events-none z-1"></canvas>
+<canvas bind:this={canvas} class="fixed inset-0 w-full h-full pointer-events-none" style="z-index: {zIndex};"></canvas>

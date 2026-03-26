@@ -56,7 +56,7 @@
   }
 </script>
 
-<GlitterBackground />
+<GlitterBackground  zIndex={0} />
 
 <div class="min-h-screen flex flex-col justify-center px-6 md:px-16 py-20">
   <div class="max-w-7xl mx-auto w-full">
@@ -87,14 +87,14 @@
       </div>
 
       <!-- Right: form -->
-      <div class="p-4 backdrop-blur-3xl realative">
+      <div class="md:p-8 backdrop-blur relative">
         <!-- <div class="absolute inset-0  bg-linear-to-l from-neon-purple/5 to-neon-pink/5  pointer-events-none"></div> -->
 
         <form onsubmit={handleSubmit} class="space-y-6 relative z-10">
           <div>
             <label
               for="name"
-              class="text-xs tracking-[0.3em] text-white/40 uppercase block mb-2"
+              class="text-xs tracking-[0.3em] text-white/30 uppercase block mb-2"
               >Name *</label
             >
             <input
@@ -110,7 +110,7 @@
           <div>
             <label
               for="email"
-              class="text-xs tracking-[0.3em] text-white/40 uppercase block mb-2"
+              class="text-xs tracking-[0.3em] text-white/30 uppercase block mb-2"
               >Email (if you want your qr code sent)</label
             >
             <input
@@ -125,7 +125,7 @@
           <div>
             <label
               for="message"
-              class="text-xs tracking-[0.3em] text-white/40 uppercase block mb-2"
+              class="text-xs tracking-[0.3em] text-white/30 uppercase block mb-2"
               >Message (optional)</label
             >
             <textarea

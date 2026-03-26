@@ -281,8 +281,9 @@ h3 {
 }
 
 a {
-  color: var(--color-neon-purple);
+  color: var(--color-neon-pink);
   text-decoration: none;
+  @apply hover:text-neon-cyan;
 }
 
 .clip-right{
