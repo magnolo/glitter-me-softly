@@ -21,7 +21,12 @@
       url: "https://soundcloud.com/diskoanimale/fivesixsevenkate-kramladen-diskoanimale-240323",
       color: "pink",
     },
-    { name: "Dj iSi", url: null, color: "white" },
+    {
+      name: "DJ The Collector ",
+      url: "https://soundcloud.com/the-collector/collector-in-the-house-mix",
+      color: "black",
+    },
+    { name: "Dj iSi", url: null, color: "pink" },
   ];
 
   onMount(() => {
