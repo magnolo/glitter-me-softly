@@ -70,7 +70,7 @@
     <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24">
       <!-- Left: heading -->
       <div class="flex flex-col justify-center">
-        <p class="text-xs tracking-[0.4em] text-white/40 uppercase mb-6">
+        <p class="text-xs tracking-[0.4em] neon-label uppercase mb-6">
           Registration
         </p>
         <h1

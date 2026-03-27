@@ -121,7 +121,7 @@
         <!-- Left: ticket info -->
         <div class="flex flex-col justify-center">
           <p
-            class="text-xs tracking-[0.4em] text-white/40 uppercase mb-6"
+            class="text-xs tracking-[0.4em] neon-label uppercase mb-6"
           >
             Your ticket
           </p>
@@ -131,53 +131,53 @@
             You're in
           </h1>
 
-          <div class="space-y-4 border-t border-white/10 pt-6">
-            <div class="flex justify-between items-baseline">
+          <div class="space-y-4  border-white/10 pt-6">
+            <div class="flex flex-col justify-between items-baseline">
               <span
                 class="text-xs tracking-[0.3em] text-white/40 uppercase"
-                >Guest</span
+                >lets party</span
               >
-              <span class="text-white font-semibold"
+              <span class="text-white text-3xl"
                 >{registration.name}</span
               >
             </div>
-             {#if registration.email}
+             <!-- {#if registration.email}
             <div
-              class="flex justify-between items-baseline border-t border-white/5 pt-4"
+              class="flex  flex-col justify-between items-baseline  pt-4"
             >
               <span
                 class="text-xs tracking-[0.3em] text-white/40 uppercase"
                 >Email</span
               >
-              <span class="text-white font-semibold"
+              <span class="text-white"
                 >{registration.email}</span
               >
             </div>
-            {/if}
+            {/if} -->
             {#if registration.plus_one}
               <div
-                class="flex justify-between items-baseline border-t border-white/5 pt-4"
+                class="flex justify-between items-baseline  pt-4"
               >
                 <span
                   class="text-xs tracking-[0.3em] text-white/40 uppercase"
                   >+1</span
                 >
-                <span class="text-white font-semibold"
+                <span class="text-white "
                   >{registration.plus_one_name || "Yes"}</span
                 >
               </div>
             {/if}
-            <div
-              class="flex justify-between items-baseline border-t border-white/5 pt-4"
+            <!-- <div
+              class="flex  flex-col justify-between items-baseline   pt-4"
             >
               <span
                 class="text-xs tracking-[0.3em] text-white/40 uppercase"
-                >Date</span
+                >On</span
               >
-              <span class="text-white font-semibold"
+              <span class="text-white"
                 >24.04.2026 — 18:00</span
               >
-            </div>
+            </div> -->
           </div>
         </div>
 

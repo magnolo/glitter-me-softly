@@ -63,7 +63,7 @@
     class="min-h-screen flex flex-col justify-center px-6 md:px-16 py-20"
   >
     <div class="max-w-7xl mx-auto w-full">
-      <p class="text-xs tracking-[0.4em] text-white/80 uppercase mb-6">
+      <p class="text-xs tracking-[0.4em] uppercase mb-6 neon-label">
         A night of sparkle & love
       </p>
       <h1
@@ -72,7 +72,7 @@
         Glitter<br />Me Softly
       </h1>
       <div class="mt-8 flex flex-col md:flex-row md:items-end gap-6 md:gap-16">
-        <p class="text-white/80 text-sm md:text-base max-w-xs leading-relaxed">
+        <p class="text-white/70 text-sm md:text-base max-w-xs leading-relaxed" style="text-shadow: 0 0 20px rgba(0, 255, 255, 0.15);">
           Four decades of light. One night of sound. Dress reflective. Dance
           like noone is watching.
         </p>
@@ -89,55 +89,55 @@
   <!-- Hard Facts -->
   <section class="px-6 md:px-16 py-20 md:py-32">
     <div class="max-w-7xl mx-auto">
-      <p class="text-xs tracking-[0.4em] text-white/80 uppercase mb-12">
+      <p class="text-xs tracking-[0.4em] uppercase mb-12 neon-label">
         The details
       </p>
       <div
         class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-12 md:gap-y-16"
       >
         <div>
-          <span class="text-xs tracking-[0.3em] text-white/40 uppercase"
+          <span class="text-xs tracking-[0.3em] uppercase neon-label"
             >Date</span
           >
           <div
-            class="text-[clamp(2.5rem,6vw,5rem)] font-black neon-text uppercase leading-[0.85] mt-2"
+            class="text-[clamp(2.5rem,6vw,5rem)] font-black  neon-glow-cyan uppercase leading-[0.85] mt-2"
           >
             24.04.2026
           </div>
-          <p class="text-white/80 text-sm mt-3">The day to remember</p>
+          <p class="text-white/60 text-sm mt-3">The day to remember</p>
         </div>
         <div>
-          <span class="text-xs tracking-[0.3em] text-white/40 uppercase"
+          <span class="text-xs tracking-[0.3em] uppercase neon-label"
             >Location</span
           >
           <div
-            class="text-[clamp(2.5rem,6vw,5rem)] font-black text-white uppercase leading-[0.85] mt-2"
+            class="text-[clamp(2.5rem,6vw,5rem)] font-black uppercase leading-[0.85] mt-2 neon-glow"
           >
             DAKS
           </div>
-          <p class="text-white/80 text-sm mt-3">Spittelauerlände 12, Vienna</p>
+          <p class="text-white/60 text-sm mt-3">Spittelauerlände 12, Vienna</p>
         </div>
         <div>
-          <span class="text-xs tracking-[0.3em] text-white/40 uppercase"
+          <span class="text-xs tracking-[0.3em] uppercase neon-label"
             >Doors</span
           >
           <div
-            class="text-[clamp(2.5rem,6vw,5rem)] font-black text-white uppercase leading-[0.85] mt-2"
+            class="text-[clamp(2.5rem,6vw,5rem)] font-black uppercase leading-[0.85] mt-2 neon-glow-cyan"
           >
             18:00
           </div>
-          <p class="text-white/80 text-sm mt-3">Grab your welcome shot</p>
+          <p class="text-white/60 text-sm mt-3">Grab your welcome shot</p>
         </div>
         <div>
-          <span class="text-xs tracking-[0.3em] text-white/40 uppercase"
+          <span class="text-xs tracking-[0.3em] uppercase neon-label"
             >Dress code</span
           >
           <div
-            class="text-[clamp(2.5rem,6vw,5rem)] font-black text-white uppercase leading-[0.85] mt-2"
+            class="text-[clamp(2.5rem,6vw,5rem)] font-black uppercase leading-[0.85] mt-2 neon-glow"
           >
             Reflective
           </div>
-          <p class="text-white/80 text-sm mt-3">The shinier the better</p>
+          <p class="text-white/60 text-sm mt-3">The shinier the better</p>
         </div>
         <!-- <div>
           <span class="text-xs tracking-[0.3em] text-white/40 uppercase">BPM</span>
@@ -149,6 +149,7 @@
     </div>
   </section>
 
+
   <!-- DJ Lineup — plain text section -->
   <section
     class="relative z-10 min-h-[50vh] md:min-h-[60vh] flex items-center justify-center px-6 md:px-16 py-12 md:py-20"
@@ -157,7 +158,7 @@
       class="absolute inset-0 bg-linear-to-l from-black/80 via-black/50 to-transparent"
     ></div> -->
     <div class="max-w-7xl mx-auto w-full relative">
-      <p class="text-xs tracking-[0.4em] text-white/80 uppercase mb-12">
+      <p class="text-xs tracking-[0.4em] uppercase mb-12 neon-label">
         The Lineup
       </p>
       <div class="flex flex-col gap-4 mt-2">
@@ -207,7 +208,7 @@
       </div>
     </div>
   </section>
-
+  <hr class="neon-divider mx-6 md:mx-16" />
   <!-- Beats — image section -->
   <section
     class="relative z-10 min-h-[50vh] md:h-[60vh] flex items-end px-6 md:px-16 py-12 md:py-20 overflow-hidden"
@@ -243,6 +244,7 @@
       </div>
     </div>
   </section>
+    <hr class="neon-divider mx-6 md:mx-16" />
 
   <!-- Glitter — plain text section -->
   <section
@@ -268,6 +270,7 @@
       </p>
     </div>
   </section>
+  <hr class="neon-divider mx-6 md:mx-16" />
 
   <!-- Drinks — image section -->
   <section
@@ -302,14 +305,16 @@
     </div>
   </section>
 
+  <hr class="neon-divider mx-6 md:mx-16" />
+
   <!-- CTA -->
   <section class="px-6 md:px-16 py-32 text-center">
     <div class="max-w-7xl mx-auto">
-      <p class="text-xs tracking-[0.4em] text-white/30 uppercase mb-6">
+      <p class="text-xs tracking-[0.4em] uppercase mb-6 neon-label">
         Secure your spot
       </p>
       <h2
-        class="text-[clamp(2rem,6vw,5rem)] font-black text-white uppercase leading-[0.85] mb-10"
+        class="text-[clamp(2rem,6vw,5rem)] font-black uppercase leading-[0.85] mb-10 neon-text"
       >
         Get your<br />QR pass
       </h2>
