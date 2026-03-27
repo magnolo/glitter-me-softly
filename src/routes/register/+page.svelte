@@ -87,14 +87,14 @@
       </div>
 
       <!-- Right: form -->
-      <div class="md:p-8 backdrop-blur relative">
-        <!-- <div class="absolute inset-0  bg-linear-to-l from-neon-purple/5 to-neon-pink/5  pointer-events-none"></div> -->
+      <div class="md:p-10 p-6 backdrop-blur relative rounded border border-white/1 bg-white/1">
+        <!-- <div class="absolute inset-0 rounded bg-linear-to-br from-neon-purple/5 via-transparent to-neon-pink/5 pointer-events-none"></div> -->
 
-        <form onsubmit={handleSubmit} class="space-y-6 relative z-10">
-          <div>
+        <form onsubmit={handleSubmit} class="space-y-8 relative z-10">
+          <div class="group/field relative">
             <label
               for="name"
-              class="text-xs tracking-[0.3em] text-white/30 uppercase block mb-2"
+              class="text-[0.65rem] tracking-[0.35em] text-white/80  uppercase block mb-3 group-focus-within/field:text-neon-cyan transition-colors duration-300"
               >Name *</label
             >
             <input
@@ -103,14 +103,14 @@
               bind:value={name}
               placeholder="How should we call you?"
               required
-              class="w-full py-3 px-0 text-white text-lg bg-transparent border-0 border-b border-white/10 focus:border-neon-pink focus:shadow-none outline-none transition-colors"
+              class="form-input rounded text-white/90 placeholder:text-white/20"
             />
           </div>
 
-          <div>
+          <div class="group/field relative">
             <label
               for="email"
-              class="text-xs tracking-[0.3em] text-white/30 uppercase block mb-2"
+              class="text-[0.65rem] tracking-[0.35em] text-white/80 uppercase block mb-3 group-focus-within/field:text-neon-cyan transition-colors duration-300"
               >Email (if you want your qr code sent)</label
             >
             <input
@@ -118,14 +118,14 @@
               type="email"
               bind:value={email}
               placeholder="your@email.com"
-              class="w-full py-3 px-0 text-white text-lg bg-transparent border-0 border-b border-white/10 focus:border-neon-pink focus:shadow-none outline-none transition-colors"
+              class="form-input rounded text-white/90 placeholder:text-white/20"
             />
           </div>
 
-          <div>
+          <div class="group/field relative">
             <label
               for="message"
-              class="text-xs tracking-[0.3em] text-white/30 uppercase block mb-2"
+              class="text-[0.65rem] tracking-[0.35em] text-white/80 0 uppercase block mb-3 group-focus-within/field:text-neon-cyan transition-colors duration-300"
               >Message (optional)</label
             >
             <textarea
@@ -133,13 +133,13 @@
               bind:value={message}
               placeholder="Something we should know about..."
               rows="3"
-              class="w-full py-3 px-0 text-white bg-transparent border-0 border-b border-white/10 focus:border-neon-pink focus:shadow-none outline-none transition-colors resize-none"
+              class="form-input rounded text-white/90 placeholder:text-white/20 resize-none"
             ></textarea>
           </div>
 
           <button
             type="submit"
-            class="btn-glow btn-glow-base w-full mt-4 py-4 text-sm disabled:opacity-40 disabled:cursor-not-allowed"
+            class="btn-glow btn-glow-base w-full mt-4 py-4 text-sm disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:transform-none"
             disabled={loading || !isFormValid}
           >
             {loading ? "Submitting..." : "Get My QR Ticket ✦"}
@@ -147,7 +147,7 @@
         </form>
         {#if error}
           <div
-            class="border border-red-500/30 text-red-400 px-5 py-3.5 mt-8 text-sm"
+            class="border border-red-500/20 bg-red-500/60 text-red-300 px-5 py-3.5 mt-8 text-sm rounded backdrop-blur"
           >
             {error}
           </div>
