@@ -13,7 +13,7 @@
     },
     {
       name: "Kobas",
-      url: null, //"https://soundcloud.com/mihaelkobas",
+      url: "https://soundcloud.com/mihaelkobas/kobas-klangkrater-aposqawiqt",
       color: "black",
     },
     {
