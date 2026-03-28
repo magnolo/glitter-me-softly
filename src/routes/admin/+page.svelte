@@ -8,10 +8,13 @@
   let qrCodes: Record<string, string> = $state({});
   let qrCodesLarge: Record<string, string> = $state({});
   let search = $state("");
+  let checkinFilter = $state<"all" | "yes" | "no">("all");
   let modalReg: any = $state(null);
 
   let filtered = $derived(
     data.registrations.filter((r: any) => {
+      if (checkinFilter === "yes" && !r.checkedin) return false;
+      if (checkinFilter === "no" && r.checkedin) return false;
       const q = search.toLowerCase();
       return (
         r.name?.toLowerCase().includes(q) ||
@@ -19,6 +22,10 @@
         r.id?.toLowerCase().includes(q)
       );
     }),
+  );
+
+  let checkedInCount = $derived(
+    data.registrations.filter((r: any) => r.checkedin).length,
   );
 
   onMount(async () => {
@@ -131,7 +138,7 @@
             Registrations
           </h1>
           <p class="text-white/40 text-sm mt-2">
-            {data.registrations.length} guests registered
+            {data.registrations.length} guests registered &middot; {checkedInCount} checked in
           </p>
         </div>
 
@@ -145,14 +152,27 @@
         </form>
       </div>
 
-      <!-- Search -->
-      <div class="mb-8">
+      <!-- Search & Filters -->
+      <div class="mb-8 flex flex-col sm:flex-row gap-4">
         <input
           type="text"
           bind:value={search}
           placeholder="Search by name, email, or ID..."
           class="form-input rounded-lg text-white/90 placeholder:text-white/20 max-w-md w-full"
         />
+        <div class="flex gap-2">
+          {#each [["all", "All"], ["yes", "Checked In"], ["no", "Not Checked In"]] as [value, label]}
+            <button
+              type="button"
+              onclick={() => (checkinFilter = value as "all" | "yes" | "no")}
+              class="px-4 py-2 text-xs tracking-[0.15em] uppercase rounded-lg border transition-colors cursor-pointer {checkinFilter === value
+                ? 'border-neon-cyan/50 text-neon-cyan bg-neon-cyan/10'
+                : 'border-white/10 text-white/30 hover:text-white/60 hover:border-white/20'}"
+            >
+              {label}
+            </button>
+          {/each}
+        </div>
       </div>
 
       {#if data.error}
@@ -199,7 +219,9 @@
           <tbody>
             {#each filtered as reg (reg.id)}
               <tr
-                class="border-b border-white/5 hover:bg-white/3 transition-colors"
+                class="border-b border-white/5 transition-colors {reg.checkedin
+                  ? 'bg-emerald-500/20 hover:bg-emerald-500/12 border-emerald-500/10'
+                  : 'hover:bg-white/3'}"
               >
                 <td class="px-5 py-3">
                   {#if qrCodes[reg.id]}
