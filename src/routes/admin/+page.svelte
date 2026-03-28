@@ -18,8 +18,8 @@
       const q = search.toLowerCase();
       return (
         r.name?.toLowerCase().includes(q) ||
-        r.email?.toLowerCase().includes(q) ||
-        r.id?.toLowerCase().includes(q)
+        r.email?.toLowerCase().includes(q) 
+        // r.id?.toLowerCase().includes(q)
       );
     }),
   );
