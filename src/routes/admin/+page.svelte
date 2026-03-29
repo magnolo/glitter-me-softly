@@ -263,12 +263,22 @@
 
       <!-- Search & Filters -->
       <div class="mb-8 flex flex-col sm:flex-row gap-4 print:hidden">
-        <input
-          type="text"
-          bind:value={search}
-          placeholder="Search by name, email, or ID..."
-          class="form-input rounded-lg text-white/90 placeholder:text-white/20 max-w-md w-full"
-        />
+        <div class="relative max-w-md w-full">
+          <input
+            type="text"
+            bind:value={search}
+            placeholder="Search by name, email, or ID..."
+            class="form-input rounded-lg text-white/90 placeholder:text-white/20 w-full pr-9"
+          />
+          {#if search}
+            <button
+              type="button"
+              onclick={() => (search = "")}
+              class="absolute right-2.5 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/70 transition-colors cursor-pointer text-lg leading-none"
+              aria-label="Clear search"
+            >&times;</button>
+          {/if}
+        </div>
         <div class="flex gap-2">
           {#each [["all", "All"], ["yes", "Checked In"], ["no", "Not Checked In"]] as [value, label]}
             <button
