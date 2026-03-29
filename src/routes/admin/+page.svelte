@@ -25,20 +25,39 @@
   let checkinFilter = $state<"all" | "yes" | "no">("all");
   let modalReg: any = $state(null);
   let togglingIds: Set<string> = $state(new Set());
+  let sortBy = $state<"name" | "created_at">("created_at");
+  let sortDir = $state<"asc" | "desc">("desc");
 
   let channel: RealtimeChannel | null = null;
 
   let filtered = $derived(
-    registrations.filter((r: any) => {
-      if (checkinFilter === "yes" && !r.checkedin) return false;
-      if (checkinFilter === "no" && r.checkedin) return false;
-      const q = search.toLowerCase();
-      return (
-        r.name?.toLowerCase().includes(q) ||
-        r.email?.toLowerCase().includes(q)
-      );
-    }),
+    registrations
+      .filter((r: any) => {
+        if (checkinFilter === "yes" && !r.checkedin) return false;
+        if (checkinFilter === "no" && r.checkedin) return false;
+        const q = search.toLowerCase();
+        return (
+          r.name?.toLowerCase().includes(q) ||
+          r.email?.toLowerCase().includes(q)
+        );
+      })
+      .toSorted((a: any, b: any) => {
+        const dir = sortDir === "asc" ? 1 : -1;
+        if (sortBy === "name") {
+          return dir * (a.name ?? "").localeCompare(b.name ?? "");
+        }
+        return dir * ((a.created_at ?? "").localeCompare(b.created_at ?? ""));
+      }),
   );
+
+  function toggleSort(col: "name" | "created_at") {
+    if (sortBy === col) {
+      sortDir = sortDir === "asc" ? "desc" : "asc";
+    } else {
+      sortBy = col;
+      sortDir = col === "name" ? "asc" : "desc";
+    }
+  }
 
 
   let checkedInCount = $derived(
@@ -95,7 +114,7 @@
     let realtimeWorking = false;
 
     channel = supabase
-      .channel("admin-registrations")
+      .channel(`admin-registrations}`)
       .on(
         "postgres_changes",
         { event: "INSERT", schema: "public", table: "registrations" },
@@ -140,7 +159,15 @@
   });
 
   function handlePrint() {
-    window.print();
+    const prevSortBy = sortBy;
+    const prevSortDir = sortDir;
+    sortBy = "name";
+    sortDir = "asc";
+    requestAnimationFrame(() => {
+      window.print();
+      sortBy = prevSortBy;
+      sortDir = prevSortDir;
+    });
   }
 
   function formatDate(iso: string) {
@@ -267,7 +294,7 @@
           <input
             type="text"
             bind:value={search}
-            placeholder="Search by name, email, or ID..."
+            placeholder="Search by name, or email..."
             class="form-input rounded-lg text-white/90 placeholder:text-white/20 w-full pr-9"
           />
           {#if search}
@@ -310,13 +337,16 @@
           <thead>
             <tr class="border-b border-white/10">
               <th
-                class="px-5 py-4 text-[0.65rem] tracking-[0.3em] text-neon-cyan/50 uppercase font-normal print:hidden"
+                class="w-24 px-5 py-4 text-[0.65rem] tracking-[0.3em] text-neon-cyan/50 uppercase font-normal print:hidden"
                 >QR</th
               >
               <th
                 class="px-5 py-4 text-[0.65rem] tracking-[0.3em] text-neon-cyan/50 uppercase font-normal"
-                >Name</th
               >
+                <button type="button" onclick={() => toggleSort("name")} class="cursor-pointer hover:text-neon-cyan/80 transition-colors print:pointer-events-none uppercase">
+                  Name {sortBy === "name" ? (sortDir === "asc" ? "▲" : "▼") : ""}
+                </button>
+              </th>
               <th
                 class="px-5 py-4 text-[0.65rem] tracking-[0.3em] text-neon-cyan/50 uppercase font-normal hidden md:table-cell print:hidden"
                 >Email</th
@@ -326,13 +356,16 @@
                 >Message</th
               >
               <th
-                class="px-5 py-4 text-[0.65rem] tracking-[0.3em] text-neon-cyan/50 uppercase font-normal hidden sm:table-cell print:hidden"
+                class="w-36 px-5 py-4 text-[0.65rem] tracking-[0.3em] text-neon-cyan/50 uppercase font-normal hidden sm:table-cell print:hidden"
                 >Checked In</th
               >
               <th
-                class="px-5 py-4 text-[0.65rem] tracking-[0.3em] text-neon-cyan/50 uppercase font-normal hidden sm:table-cell"
-                >Registered</th
+                class="w-42 px-5 py-4 text-[0.65rem] tracking-[0.3em] text-neon-cyan/50 uppercase font-normal hidden sm:table-cell print:hidden"
               >
+                <button type="button" onclick={() => toggleSort("created_at")} class="cursor-pointer uppercase hover:text-neon-cyan/80 transition-colors print:pointer-events-none">
+                  Registered {sortBy === "created_at" ? (sortDir === "asc" ? "▲" : "▼") : ""}
+                </button>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -363,7 +396,7 @@
                 </td>
                 <td class="px-5 py-3 print:text-base print:font-bold">
                   <span class="text-white font-semibold">{reg.name}</span>
-                  <span class="block md:hidden text-white/40 text-xs mt-0.5"
+                  <span class="block md:hidden print:hidden text-white/40 text-xs mt-0.5"
                     >{reg.email || "—"}</span
                   >
                 </td>
@@ -371,7 +404,7 @@
                   >{reg.email || "—"}</td
                 >
                 <td
-                  class="px-5 py-3 text-white/40 text-sm max-w-[200px] truncate hidden lg:table-cell"
+                  class="px-5 py-3 text-white/40 text-sm max-w-[200px]  hidden lg:table-cell"
                   >{reg.message || "—"}</td
                 >
                 <td class="px-5 py-3 hidden sm:table-cell print:hidden">
@@ -393,7 +426,7 @@
                   </button>
                 </td>
                 <td
-                  class="px-5 py-3 text-white/40 text-xs hidden sm:table-cell"
+                  class="print:hidden px-5 py-3 text-white/40 text-xs hidden sm:table-cell"
                 >
                   {formatDate(reg.created_at)}
                 </td>
