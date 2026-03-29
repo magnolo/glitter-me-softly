@@ -1,47 +1,147 @@
 <script lang="ts">
   import { enhance } from "$app/forms";
   import QRCode from "qrcode";
-  import { onMount } from "svelte";
+  import { onMount, onDestroy } from "svelte";
+  import { supabase } from "$lib/supabase";
+  import type { RealtimeChannel } from "@supabase/supabase-js";
 
   let { data, form } = $props();
 
+  let realtimeUpdates: Record<string, any> = $state({});
+  let realtimeInserts: any[] = $state([]);
+  let realtimeDeletes: Set<string> = $state(new Set());
+
+  let registrations = $derived.by(() => {
+    const base = data.registrations
+      .filter((r: any) => !realtimeDeletes.has(r.id))
+      .map((r: any) => realtimeUpdates[r.id] ?? r);
+    const existingIds = new Set(base.map((r: any) => r.id));
+    const newOnes = realtimeInserts.filter((r) => !existingIds.has(r.id));
+    return [...newOnes, ...base];
+  });
   let qrCodes: Record<string, string> = $state({});
   let qrCodesLarge: Record<string, string> = $state({});
   let search = $state("");
   let checkinFilter = $state<"all" | "yes" | "no">("all");
   let modalReg: any = $state(null);
+  let togglingIds: Set<string> = $state(new Set());
+
+  let channel: RealtimeChannel | null = null;
 
   let filtered = $derived(
-    data.registrations.filter((r: any) => {
+    registrations.filter((r: any) => {
       if (checkinFilter === "yes" && !r.checkedin) return false;
       if (checkinFilter === "no" && r.checkedin) return false;
       const q = search.toLowerCase();
       return (
         r.name?.toLowerCase().includes(q) ||
-        r.email?.toLowerCase().includes(q) 
-        // r.id?.toLowerCase().includes(q)
+        r.email?.toLowerCase().includes(q)
       );
     }),
   );
 
+
   let checkedInCount = $derived(
-    data.registrations.filter((r: any) => r.checkedin).length,
+    registrations.filter((r: any) => r.checkedin).length,
   );
+
+  async function generateQr(reg: any) {
+    const payload = JSON.stringify({
+      event: "Glitter Me Softly",
+      id: reg.id,
+      name: reg.name,
+      email: reg.email,
+    });
+    const opts = { margin: 1, color: { dark: "#fff", light: "#0a0012" }, errorCorrectionLevel: "M" as const };
+    qrCodes[reg.id] = await QRCode.toDataURL(payload, { ...opts, width: 120 });
+    qrCodesLarge[reg.id] = await QRCode.toDataURL(payload, { ...opts, width: 400 });
+  }
+
+  async function toggleCheckin(reg: any) {
+    togglingIds.add(reg.id);
+    togglingIds = new Set(togglingIds);
+
+    const newValue = !reg.checkedin;
+
+    // Optimistic update
+    realtimeUpdates[reg.id] = { ...reg, checkedin: newValue };
+    realtimeUpdates = { ...realtimeUpdates };
+
+    const { error } = await supabase
+      .from("registrations")
+      .update({ checkedin: newValue })
+      .eq("id", reg.id);
+
+    if (error) {
+      console.error("Failed to toggle checkin:", error);
+      // Revert on failure
+      realtimeUpdates[reg.id] = { ...reg };
+      realtimeUpdates = { ...realtimeUpdates };
+    }
+
+    togglingIds.delete(reg.id);
+    togglingIds = new Set(togglingIds);
+  }
 
   onMount(async () => {
     if (!data.authenticated) return;
-    for (const reg of data.registrations) {
-      const payload = JSON.stringify({
-        event: "Glitter Me Softly",
-        id: reg.id,
-        name: reg.name,
-        email: reg.email,
-      });
-      const opts = { margin: 1, color: { dark: "#fff", light: "#0a0012" }, errorCorrectionLevel: "M" as const };
-      qrCodes[reg.id] = await QRCode.toDataURL(payload, { ...opts, width: 120 });
-      qrCodesLarge[reg.id] = await QRCode.toDataURL(payload, { ...opts, width: 400 });
+
+    // Generate QR codes for initial data
+    for (const reg of registrations) {
+      await generateQr(reg);
     }
+
+    // Subscribe to realtime changes
+    let realtimeWorking = false;
+
+    channel = supabase
+      .channel("admin-registrations")
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "registrations" },
+        async (payload) => {
+          realtimeWorking = true;
+          const row = payload.new as any;
+          realtimeInserts = [row, ...realtimeInserts];
+          await generateQr(row);
+        },
+      )
+      .on(
+        "postgres_changes",
+        { event: "UPDATE", schema: "public", table: "registrations" },
+        (payload) => {
+          realtimeWorking = true;
+          const row = payload.new as any;
+          realtimeUpdates[row.id] = row;
+          realtimeUpdates = { ...realtimeUpdates };
+        },
+      )
+      .on(
+        "postgres_changes",
+        { event: "DELETE", schema: "public", table: "registrations" },
+        (payload) => {
+          realtimeWorking = true;
+          realtimeDeletes.add((payload.old as any).id);
+          realtimeDeletes = new Set(realtimeDeletes);
+        },
+      )
+      .subscribe((status) => {
+        console.log("Realtime status:", status);
+      });
+
+
   });
+
+  onDestroy(() => {
+    if (channel) {
+      supabase.removeChannel(channel);
+    }
+    
+  });
+
+  function handlePrint() {
+    window.print();
+  }
 
   function formatDate(iso: string) {
     return new Date(iso).toLocaleDateString("de-AT", {
@@ -138,22 +238,31 @@
             Registrations
           </h1>
           <p class="text-white/40 text-sm mt-2">
-            {data.registrations.length} guests registered &middot; {checkedInCount} checked in
+            {registrations.length} guests registered &middot; {checkedInCount} checked in
           </p>
         </div>
 
-        <form method="POST" action="?/logout" use:enhance>
+        <div class="flex items-center gap-4 justify-center">
           <button
-            type="submit"
-            class="text-xs tracking-[0.2em] text-white/30 uppercase hover:text-white/70 transition-colors cursor-pointer"
+            type="button"
+            onclick={handlePrint}
+            class="print:hidden text-xs tracking-[0.2em] text-white/30 uppercase hover:text-white/70 transition-colors cursor-pointer"
           >
-            Logout
+            Print
           </button>
-        </form>
+          <form method="POST" action="?/logout" use:enhance class="print:hidden flex items-center">
+            <button
+              type="submit"
+              class="text-xs tracking-[0.2em] text-white/30 uppercase hover:text-white/70 transition-colors cursor-pointer"
+            >
+              Logout
+            </button>
+          </form>
+        </div>
       </div>
 
       <!-- Search & Filters -->
-      <div class="mb-8 flex flex-col sm:flex-row gap-4">
+      <div class="mb-8 flex flex-col sm:flex-row gap-4 print:hidden">
         <input
           type="text"
           bind:value={search}
@@ -191,7 +300,7 @@
           <thead>
             <tr class="border-b border-white/10">
               <th
-                class="px-5 py-4 text-[0.65rem] tracking-[0.3em] text-neon-cyan/50 uppercase font-normal"
+                class="px-5 py-4 text-[0.65rem] tracking-[0.3em] text-neon-cyan/50 uppercase font-normal print:hidden"
                 >QR</th
               >
               <th
@@ -199,7 +308,7 @@
                 >Name</th
               >
               <th
-                class="px-5 py-4 text-[0.65rem] tracking-[0.3em] text-neon-cyan/50 uppercase font-normal hidden md:table-cell"
+                class="px-5 py-4 text-[0.65rem] tracking-[0.3em] text-neon-cyan/50 uppercase font-normal hidden md:table-cell print:hidden"
                 >Email</th
               >
               <th
@@ -207,7 +316,7 @@
                 >Message</th
               >
               <th
-                class="px-5 py-4 text-[0.65rem] tracking-[0.3em] text-neon-cyan/50 uppercase font-normal hidden sm:table-cell"
+                class="px-5 py-4 text-[0.65rem] tracking-[0.3em] text-neon-cyan/50 uppercase font-normal hidden sm:table-cell print:hidden"
                 >Checked In</th
               >
               <th
@@ -223,7 +332,7 @@
                   ? 'bg-emerald-500/20 hover:bg-emerald-500/12 border-emerald-500/10'
                   : 'hover:bg-white/3'}"
               >
-                <td class="px-5 py-3">
+                <td class="px-5 py-3 print:hidden">
                   {#if qrCodes[reg.id]}
                     <button
                       type="button"
@@ -242,30 +351,36 @@
                     ></div>
                   {/if}
                 </td>
-                <td class="px-5 py-3">
+                <td class="px-5 py-3 print:text-base print:font-bold">
                   <span class="text-white font-semibold">{reg.name}</span>
                   <span class="block md:hidden text-white/40 text-xs mt-0.5"
                     >{reg.email || "—"}</span
                   >
                 </td>
-                <td class="px-5 py-3 text-white/60 text-sm hidden md:table-cell"
+                <td class="px-5 py-3 text-white/60 text-sm hidden md:table-cell print:hidden"
                   >{reg.email || "—"}</td
                 >
                 <td
                   class="px-5 py-3 text-white/40 text-sm max-w-[200px] truncate hidden lg:table-cell"
                   >{reg.message || "—"}</td
                 >
-                <td class="px-5 py-3 hidden sm:table-cell">
-                  {#if reg.checkedin}
+                <td class="px-5 py-3 hidden sm:table-cell print:hidden">
+                  <button
+                    type="button"
+                    onclick={() => toggleCheckin(reg)}
+                    disabled={togglingIds.has(reg.id)}
+                    class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out disabled:opacity-50 {reg.checkedin
+                      ? 'bg-emerald-500'
+                      : 'bg-white/10'}"
+                    role="switch"
+                    aria-checked={reg.checkedin}
+                  >
                     <span
-                      class="text-xs tracking-wider uppercase text-emerald-400"
-                      >Yes</span
-                    >
-                  {:else}
-                    <span class="text-xs tracking-wider uppercase text-white/20"
-                      >No</span
-                    >
-                  {/if}
+                      class="pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow-lg ring-0 transition-transform duration-200 ease-in-out {reg.checkedin
+                        ? 'translate-x-5'
+                        : 'translate-x-0'}"
+                    ></span>
+                  </button>
                 </td>
                 <td
                   class="px-5 py-3 text-white/40 text-xs hidden sm:table-cell"
@@ -288,7 +403,7 @@
     </div>
   </div>
 
-  <!-- QR Modal -->
+  <!-- QR Modal (hidden in print) -->
   {#if modalReg}
     <div
       class="fixed inset-0 z-50 flex items-center justify-center p-6"
@@ -332,3 +447,117 @@
     </div>
   {/if}
 {/if}
+
+<style>
+  @media print {
+    /* Page setup */
+    @page {
+      size: A4 portrait;
+      margin: 10mm;
+    }
+
+    /* Reset dark background for printing */
+    :global(body) {
+      background: white !important;
+      background-image: none !important;
+      color: black !important;
+    }
+
+    :global(.fixed),
+    :global(canvas) {
+      display: none !important;
+    }
+
+    /* Remove page padding */
+    :global(.min-h-screen) {
+      min-height: auto !important;
+      padding: 0 !important;
+    }
+
+    /* Show responsive-hidden columns, but not print:hidden ones */
+    :global(.hidden.sm\:table-cell:not(.print\:hidden)),
+    :global(.hidden.lg\:table-cell) {
+      display: table-cell !important;
+    }
+
+    /* Hide print:hidden elements (QR, Email, Checked In columns) */
+    :global(.print\:hidden) {
+      display: none !important;
+    }
+
+    /* Table styling for print — compact */
+    :global(table) {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 11px;
+      table-layout: auto;
+    }
+
+    :global(th),
+    :global(td) {
+      border: 1px solid #ccc !important;
+      padding: 4px 8px !important;
+      color: black !important;
+      background: transparent !important;
+    }
+
+    :global(thead tr) {
+      background: #f0f0f0 !important;
+    }
+
+    /* Name column — bigger and bold */
+    :global(.print\:text-base) {
+      font-size: 14px !important;
+      font-weight: 700 !important;
+    }
+
+    /* Green highlight for checked-in rows */
+    :global(tr[class*="bg-emerald"]) {
+      background: #d1fae5 !important;
+    }
+
+    :global(tr[class*="bg-emerald"] td) {
+      background: #d1fae5 !important;
+    }
+
+    /* Remove decorative borders and blur */
+    :global(.backdrop-blur-xl),
+    :global(.backdrop-blur) {
+      backdrop-filter: none !important;
+    }
+
+    :global(.rounded-2xl) {
+      border-color: #ccc !important;
+      border-radius: 0 !important;
+    }
+
+    :global(.overflow-x-auto) {
+      overflow: visible !important;
+    }
+
+    /* Make text readable */
+    :global(.neon-text),
+    :global(.neon-label) {
+      background: none !important;
+      -webkit-background-clip: unset !important;
+      -webkit-text-fill-color: black !important;
+      text-shadow: none !important;
+      color: black !important;
+    }
+
+    :global(h1) {
+      color: black !important;
+      font-size: 16px !important;
+    }
+
+    :global(p),
+    :global(span) {
+      color: black !important;
+    }
+
+    :global(.text-white\/40),
+    :global(.text-white\/60) {
+      color: #444 !important;
+    }
+  }
+</style>
