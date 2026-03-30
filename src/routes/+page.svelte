@@ -71,17 +71,22 @@
       >
         Glitter<br />Me Softly
       </h1>
-      <div class="mt-8 flex flex-col md:flex-row md:items-end gap-6 md:gap-16">
+      <div class="mt-8 flex flex-col md:flex-row  gap-6 md:gap-16">
         <p class="text-white/70 text-sm md:text-base max-w-xs leading-relaxed" style="text-shadow: 0 0 20px rgba(0, 255, 255, 0.15);">
           Four decades of light. One night of sound. Dress reflective. Dance
           like noone is watching.
         </p>
-        <a
+        <div class="pt-4">
+
+          <a
           href="/register"
-          class="btn-glow btn-glow-base py-3 px-8 text-xs no-underline max-w-max flex"
+         class="btn-glow btn-glow-base inline-block py-4 px-12 text-sm no-underline animate-[glow-pulse_2s_ease-in-out_infinite]"
         >
           Get your pass ✦
         </a>
+        
+  <p class="text-white/30 text-xs mt-2 text-center">Limited spots available</p>
+      </div>
       </div>
     </div>
   </section>
@@ -314,16 +319,20 @@
         Secure your spot
       </p>
       <h2
-        class="text-[clamp(2rem,6vw,5rem)] font-black uppercase leading-[0.85] mb-10 neon-text"
+        class="text-[clamp(2rem,6vw,5rem)] font-black uppercase leading-[0.85] mb-6 neon-text"
       >
         Get your<br />QR pass
       </h2>
+      <p class="text-white/50 text-xs tracking-[0.25em] uppercase mb-10">
+        ✦ Guestlist only ✦
+      </p>
       <a
         href="/register"
-        class="btn-glow btn-glow-base inline-block py-4 px-12 text-sm no-underline"
+        class="btn-glow btn-glow-base inline-block py-4 px-12 text-sm no-underline animate-[glow-pulse_2s_ease-in-out_infinite]"
       >
         Register now ✦
       </a>
+      <p class="text-white/30 text-xs mt-6">Limited spots available</p>
     </div>
   </section>
 </div>
