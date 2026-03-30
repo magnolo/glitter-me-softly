@@ -85,7 +85,7 @@
           Get your pass ✦
         </a>
         
-  <p class="text-white/30 text-xs mt-2 text-center">Limited spots available</p>
+  <p class="text-white/30 text-xs mt-2 md:text-center">Limited spots available</p>
       </div>
       </div>
     </div>
