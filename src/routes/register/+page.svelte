@@ -23,7 +23,7 @@
 
   let isValidEmail = $derived(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email));
   let isFormValid = $derived(
-    name.trim().length > 3 && (email.trim().length > 0 ? isValidEmail : true),
+    name.trim().length > 2 && (email.trim().length > 0 ? isValidEmail : true),
   );
 
   async function handleSubmit(e: SubmitEvent) {
