@@ -27,6 +27,7 @@
   let togglingIds: Set<string> = $state(new Set());
   let sortBy = $state<"name" | "created_at">("created_at");
   let sortDir = $state<"asc" | "desc">("desc");
+  let loggingIn = $state(false);
 
   let channel: RealtimeChannel | null = null;
 
@@ -102,13 +103,18 @@
     togglingIds = new Set(togglingIds);
   }
 
-  onMount(async () => {
+  $effect(() => {
     if (!data.authenticated) return;
-
-    // Generate QR codes for initial data
+    // Generate QR codes for any registrations that don't have one yet
     for (const reg of registrations) {
-      await generateQr(reg);
+      if (!qrCodes[reg.id]) {
+        generateQr(reg);
+      }
     }
+  });
+
+  onMount(() => {
+    if (!data.authenticated) return;
 
     // Subscribe to realtime changes
     let realtimeWorking = false;
@@ -205,7 +211,13 @@
         </div>
       {/if}
 
-      <form method="POST" action="?/login" use:enhance class="space-y-6">
+      <form method="POST" action="?/login" use:enhance={() => {
+        loggingIn = true;
+        return async ({ update }) => {
+          await update();
+          loggingIn = false;
+        };
+      }} class="space-y-6">
         <div>
           <label
             for="username"
@@ -242,9 +254,14 @@
 
         <button
           type="submit"
-          class="btn-glow btn-glow-base w-full py-4 text-sm"
+          disabled={loggingIn}
+          class="btn-glow btn-glow-base w-full py-4 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Login
+          {#if loggingIn}
+            <span class="inline-block w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+          {:else}
+            Login
+          {/if}
         </button>
       </form>
     </div>
