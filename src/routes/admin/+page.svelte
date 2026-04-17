@@ -427,6 +427,7 @@
                 <td class="px-5 py-3 hidden sm:table-cell print:hidden">
                   <button
                     type="button"
+                    aria-label={"Checkin for " + reg.name}
                     onclick={() => toggleCheckin(reg)}
                     disabled={togglingIds.has(reg.id)}
                     class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out disabled:opacity-50 {reg.checkedin
