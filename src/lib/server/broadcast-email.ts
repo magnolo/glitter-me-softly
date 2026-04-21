@@ -51,6 +51,13 @@ export function renderBroadcastEmail({
 	const mapUrl =
 		'https://www.google.com/maps/place/Dachsbau+-+Atelier-CoWorking+Space/@48.2339495,16.3607168,163m/data=!3m1!1e3!4m6!3m5!1s0x476d0634e46cb56f:0x6d562d9aeff8c177!8m2!3d48.2340535!4d16.3608401!16s%2Fg%2F11b6jgmzml';
 
+	const siteUrl = 'https://glitter-me-softly.skin/';
+	const shareText = `Glitter Me Softly ✦ a night of sparkle & love — 24.04.2026, 18:00, DAKS Vienna. Come dance with me: ${siteUrl}`;
+	const whatsappShare = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
+	const telegramShare = `https://t.me/share/url?url=${encodeURIComponent(siteUrl)}&text=${encodeURIComponent(shareText)}`;
+	const twitterShare = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
+	const mailShare = `mailto:?subject=${encodeURIComponent('Glitter Me Softly ✦ Come dance with me')}&body=${encodeURIComponent(shareText)}`;
+
 	const subject = countdown.passed
 		? '✦ Doors are open — come dance with us'
 		: `✦ ${countdown.label} until we dance — free drinks for early birds`;
@@ -213,6 +220,48 @@ export function renderBroadcastEmail({
 							<tr>
 								<td style="padding: 12px 0; color: rgba(255,255,255,0.45); font-size: 11px; letter-spacing: 3px; text-transform: uppercase;">Bring</td>
 								<td style="padding: 12px 0; color: #ffffff; font-size: 15px; font-weight: 700;">Your QR ticket &middot; your sparkle</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+
+				${divider}
+
+				<!-- Share CTA -->
+				<tr>
+					<td align="center" style="padding: 0;">
+						<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background: linear-gradient(135deg, rgba(255,0,255,0.18), rgba(123,104,238,0.12)); border-top: 1px solid rgba(255,0,255,0.35); border-bottom: 1px solid rgba(255,0,255,0.35);">
+							<tr>
+								<td align="center" style="padding: 40px 40px;">
+									<p style="color: #ff00ff; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11px; letter-spacing: 5px; text-transform: uppercase; margin: 0 0 14px 0; font-weight: 700;">
+										&#10022; Pass it on &#10022;
+									</p>
+									<p style="color: #ffffff; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 24px; font-weight: 900; line-height: 1.25; margin: 0 0 14px 0; letter-spacing: 0.5px;">
+										Someone coming to mind?
+									</p>
+									<p style="color: rgba(255,255,255,0.85); font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 15px; line-height: 1.6; margin: 0 0 10px 0;">
+										If there&rsquo;s a friend who&rsquo;d glitter beautifully beside you that night,<br /> or someone in your life who could use a little light right now &mdash; send the invite their way, with our love.
+									</p>
+									<p style="color: rgba(255,255,255,0.55); font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 13px; line-height: 1.6; margin: 0 0 26px 0; font-style: italic;">
+										More sparkles, more love
+									</p>
+
+									<!-- Primary share button -->
+									<p style="margin: 0 0 18px 0;">
+										<a href="${whatsappShare}" style="display: inline-block; padding: 14px 28px; background: #ff00ff; border-radius: 999px; color: #0a0012; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 13px; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; text-decoration: none;">
+											Share the invite
+										</a>
+									</p>
+
+									<!-- Secondary share links -->
+									<p style="color: rgba(255,255,255,0.5); font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; margin: 0;">
+										<a href="${telegramShare}" style="color: rgba(255,255,255,0.75); text-decoration: none; border-bottom: 1px solid rgba(255,0,255,0.5); padding-bottom: 2px;">Telegram</a>
+										<span style="color: rgba(255,255,255,0.25); padding: 0 10px;">&middot;</span>
+										<a href="${twitterShare}" style="color: rgba(255,255,255,0.75); text-decoration: none; border-bottom: 1px solid rgba(255,0,255,0.5); padding-bottom: 2px;">X</a>
+										<span style="color: rgba(255,255,255,0.25); padding: 0 10px;">&middot;</span>
+										<a href="${mailShare}" style="color: rgba(255,255,255,0.75); text-decoration: none; border-bottom: 1px solid rgba(255,0,255,0.5); padding-bottom: 2px;">Email</a>
+									</p>
+								</td>
 							</tr>
 						</table>
 					</td>
