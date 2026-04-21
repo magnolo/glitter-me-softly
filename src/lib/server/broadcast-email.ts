@@ -104,17 +104,23 @@ export function renderBroadcastEmail({
 
 	const html = `
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="color-scheme" content="dark light" />
+<meta name="supported-color-schemes" content="dark light" />
 <title>Glitter Me Softly</title>
+<style>
+	:root { color-scheme: dark light; supported-color-schemes: dark light; }
+</style>
 </head>
-<body style="margin: 0; padding: 0; background-color: #0a0012;">
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #0a0012;">
+<body bgcolor="#0a0012" style="margin: 0; padding: 0; background-color: #0a0012; background: #0a0012;">
+<div style="background-color: #0a0012; background: #0a0012;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0a0012" style="background-color: #0a0012; background: #0a0012;">
 	<tr>
-		<td align="center" style="padding: 32px 16px;">
-			<table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="max-width: 600px; width: 100%; background: linear-gradient(180deg, rgba(123,104,238,0.10) 0%, rgba(10,0,18,0) 55%), #0a0012; border: 1px solid rgba(255,255,255,0.08); border-radius: 22px; overflow: hidden;">
+		<td align="center" bgcolor="#0a0012" style="padding: 32px 16px; background-color: #0a0012;">
+			<table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#0a0012" style="max-width: 600px; width: 100%; background-color: #0a0012; background: linear-gradient(180deg, rgba(123,104,238,0.10) 0%, rgba(10,0,18,0) 55%), #0a0012; border: 1px solid rgba(255,255,255,0.08); border-radius: 22px; overflow: hidden;">
 
 				<!-- Header -->
 				<tr>
@@ -248,6 +254,7 @@ export function renderBroadcastEmail({
 		</td>
 	</tr>
 </table>
+</div>
 </body>
 </html>
 	`;
