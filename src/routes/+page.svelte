@@ -111,7 +111,12 @@
           </div>
           <p class="text-white/60 text-sm mt-3">The day to remember</p>
         </div>
-        <div>
+        <a
+          href="https://www.google.com/maps/place/Dachsbau+-+Atelier-CoWorking+Space/@48.2339495,16.3607168,163m/data=!3m1!1e3!4m6!3m5!1s0x476d0634e46cb56f:0x6d562d9aeff8c177!8m2!3d48.2340535!4d16.3608401!16s%2Fg%2F11b6jgmzml"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="block group transition-opacity hover:opacity-90"
+        >
           <span class="text-xs tracking-[0.3em] uppercase neon-label"
             >Location</span
           >
@@ -121,7 +126,10 @@
             DAKS
           </div>
           <p class="text-white/60 text-sm mt-3">Spittelauerlände 12, Vienna</p>
-        </div>
+          <p class="text-neon-pink/70 text-xs tracking-[0.2em] uppercase mt-2 group-hover:text-neon-pink transition-colors">
+            Open in Maps &rarr;
+          </p>
+        </a>
         <div>
           <span class="text-xs tracking-[0.3em] uppercase neon-label"
             >Doors</span

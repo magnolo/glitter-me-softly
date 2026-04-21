@@ -287,6 +287,12 @@
         </div>
 
         <div class="flex items-center gap-4 justify-center">
+          <a
+            href="/admin/broadcast"
+            class="print:hidden text-xs tracking-[0.2em] text-white/30 uppercase hover:text-white/70 transition-colors"
+          >
+            Email blast
+          </a>
           <button
             type="button"
             onclick={handlePrint}
