@@ -352,9 +352,18 @@
         </div>
       {/if}
 
+      <!-- Print-only names list (2 columns per page) -->
+      <ul class="hidden print:block print-names">
+        {#each filtered as reg (reg.id)}
+          <li class="print-name-item {reg.checkedin ? 'print-checkedin' : ''}">
+            {reg.name}
+          </li>
+        {/each}
+      </ul>
+
       <!-- Table -->
       <div
-        class="overflow-x-auto rounded-2xl border border-white/6 bg-white/2 backdrop-blur-xl"
+        class="overflow-x-auto rounded-2xl border border-white/6 bg-white/2 backdrop-blur-xl print:hidden"
       >
         <table class="w-full text-left">
           <thead>
@@ -550,6 +559,30 @@
     /* Hide print:hidden elements (QR, Email, Checked In columns) */
     :global(.print\:hidden) {
       display: none !important;
+    }
+
+    /* Print-only 2-column names list */
+    .print-names {
+      column-count: 2;
+      column-gap: 16mm;
+      column-fill: auto;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      color: black;
+    }
+
+    .print-name-item {
+      break-inside: avoid;
+      padding: 4px 0;
+      border-bottom: 1px solid #ddd;
+      font-size: 13px;
+      font-weight: 600;
+      color: black;
+    }
+
+    .print-checkedin {
+      background: #d1fae5 !important;
     }
 
     /* Table styling for print — compact */
