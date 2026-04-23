@@ -12,6 +12,23 @@
   let armed = $state(false);
   let armTimeout: ReturnType<typeof setTimeout> | null = null;
 
+  type TemplateId = "earlyBird" | "djLineup";
+  let template: TemplateId = $state("earlyBird");
+  let activePreview = $derived(data.previews[template]);
+
+  const templates: { id: TemplateId; label: string; description: string }[] = [
+    {
+      id: "earlyBird",
+      label: "Early-bird invite",
+      description: "Countdown · come early for free drinks · share",
+    },
+    {
+      id: "djLineup",
+      label: "DJ lineup",
+      description: "Meet the DJs · SoundCloud links · warm-up",
+    },
+  ];
+
   let liveCountdown = $derived.by(() => {
     const eventMs = new Date(data.eventDateIso).getTime();
     const diffMs = eventMs - now.getTime();
@@ -122,6 +139,32 @@
       </div>
     {/if}
 
+    <!-- Template picker -->
+    <div class="mb-8">
+      <p
+        class="text-[0.65rem] tracking-[0.3em] text-neon-cyan/50 uppercase mb-3"
+      >
+        Template
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        {#each templates as t (t.id)}
+          <button
+            type="button"
+            onclick={() => (template = t.id)}
+            class="text-left p-4 rounded-2xl border transition-colors cursor-pointer {template ===
+            t.id
+              ? 'border-neon-pink/60 bg-neon-pink/8 text-white'
+              : 'border-white/10 bg-white/2 hover:border-white/30 text-white/70'}"
+          >
+            <p class="text-sm font-bold uppercase tracking-[0.15em]">
+              {t.label}
+            </p>
+            <p class="text-xs text-white/50 mt-1">{t.description}</p>
+          </button>
+        {/each}
+      </div>
+    </div>
+
     <!-- Preview -->
     <div class="mb-10">
       <p
@@ -130,13 +173,13 @@
         Preview
       </p>
       <p class="text-white/50 text-sm mb-3">
-        Subject: <span class="text-white font-semibold">{data.preview.subject}</span>
+        Subject: <span class="text-white font-semibold">{activePreview.subject}</span>
       </p>
       <div
         class="rounded-2xl border border-white/10 overflow-hidden bg-bg-dark"
       >
         <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-        {@html data.preview.html}
+        {@html activePreview.html}
       </div>
     </div>
 
@@ -177,6 +220,7 @@
         }}
         class="flex flex-col sm:flex-row gap-3"
       >
+        <input type="hidden" name="template" value={template} />
         <input
           type="email"
           name="email"
@@ -254,6 +298,7 @@
           };
         }}
       >
+        <input type="hidden" name="template" value={template} />
         {#if !armed}
           <button
             type="button"
