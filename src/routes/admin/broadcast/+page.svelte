@@ -12,22 +12,16 @@
   let armed = $state(false);
   let armTimeout: ReturnType<typeof setTimeout> | null = null;
 
-  type TemplateId = "earlyBird" | "djLineup";
-  let template: TemplateId = $state("earlyBird");
-  let activePreview = $derived(data.previews[template]);
+  let template = $state<string>("");
+  let activePreview = $derived(
+    data.previews[template] ?? data.previews[data.templates[0]?.slug ?? ""],
+  );
 
-  const templates: { id: TemplateId; label: string; description: string }[] = [
-    {
-      id: "earlyBird",
-      label: "Early-bird invite",
-      description: "Countdown · come early for free drinks · share",
-    },
-    {
-      id: "djLineup",
-      label: "DJ lineup",
-      description: "Meet the DJs · SoundCloud links · warm-up",
-    },
-  ];
+  $effect(() => {
+    if (!template && data.templates.length > 0) {
+      template = data.templates[0].slug;
+    }
+  });
 
   let liveCountdown = $derived.by(() => {
     const eventMs = new Date(data.eventDateIso).getTime();
@@ -147,17 +141,17 @@
         Template
       </p>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {#each templates as t (t.id)}
+        {#each data.templates as t (t.slug)}
           <button
             type="button"
-            onclick={() => (template = t.id)}
+            onclick={() => (template = t.slug)}
             class="text-left p-4 rounded-2xl border transition-colors cursor-pointer {template ===
-            t.id
+            t.slug
               ? 'border-neon-pink/60 bg-neon-pink/8 text-white'
               : 'border-white/10 bg-white/2 hover:border-white/30 text-white/70'}"
           >
             <p class="text-sm font-bold uppercase tracking-[0.15em]">
-              {t.label}
+              {t.name}
             </p>
             <p class="text-xs text-white/50 mt-1">{t.description}</p>
           </button>
@@ -166,6 +160,7 @@
     </div>
 
     <!-- Preview -->
+    {#if activePreview}
     <div class="mb-10">
       <p
         class="text-[0.65rem] tracking-[0.3em] text-neon-cyan/50 uppercase mb-3"
@@ -182,6 +177,7 @@
         {@html activePreview.html}
       </div>
     </div>
+    {/if}
 
     <!-- Test Send -->
     <div

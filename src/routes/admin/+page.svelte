@@ -293,6 +293,12 @@
           >
             Email blast
           </a>
+          <a
+            href="/admin/templates"
+            class="print:hidden text-xs tracking-[0.2em] text-white/30 uppercase hover:text-white/70 transition-colors"
+          >
+            Templates
+          </a>
           <button
             type="button"
             onclick={handlePrint}

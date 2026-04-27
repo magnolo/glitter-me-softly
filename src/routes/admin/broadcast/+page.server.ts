@@ -6,18 +6,11 @@ import { createClient } from '@supabase/supabase-js';
 import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY } from '$env/static/public';
 import {
 	EVENT_DATE_ISO,
-	renderTemplate,
-	type BroadcastTemplate,
+	loadAllTemplates,
+	loadTemplate,
+	renderLoadedTemplate,
+	seedDefaultsIfEmpty,
 } from '$lib/server/broadcast-email';
-
-const VALID_TEMPLATES: readonly BroadcastTemplate[] = ['earlyBird', 'djLineup'];
-
-function parseTemplate(value: FormDataEntryValue | null): BroadcastTemplate {
-	const v = value?.toString() ?? '';
-	return (VALID_TEMPLATES as readonly string[]).includes(v)
-		? (v as BroadcastTemplate)
-		: 'earlyBird';
-}
 
 const supabase = createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY);
 const resend = new Resend(RESEND_API_KEY);
@@ -38,22 +31,33 @@ export const load: PageServerLoad = async ({ cookies }) => {
 		redirect(303, '/admin');
 	}
 
-	const { data, error } = await supabase
-		.from('registrations')
-		.select('id, name, email')
-		.order('created_at', { ascending: false });
+	await seedDefaultsIfEmpty();
+
+	const [{ data, error }, templates] = await Promise.all([
+		supabase.from('registrations').select('id, name, email').order('created_at', { ascending: false }),
+		loadAllTemplates(),
+	]);
 
 	const recipients: Recipient[] = (data ?? []).filter((r): r is Recipient => Boolean(r.email));
 
 	const previewNow = new Date();
-	const previews = {
-		earlyBird: renderTemplate('earlyBird', { name: 'Your Guest', now: previewNow }),
-		djLineup: renderTemplate('djLineup', { name: 'Your Guest', now: previewNow }),
-	};
+	const previews = Object.fromEntries(
+		templates.map((tpl) => [
+			tpl.slug,
+			renderLoadedTemplate(tpl, { name: 'Your Guest', now: previewNow }),
+		]),
+	);
+
+	const templateMeta = templates.map((t) => ({
+		slug: t.slug,
+		name: t.name,
+		description: t.description,
+	}));
 
 	return {
 		recipients,
 		eventDateIso: EVENT_DATE_ISO,
+		templates: templateMeta,
 		previews,
 		error: error?.message,
 	};
@@ -67,13 +71,20 @@ export const actions: Actions = {
 
 		const formData = await request.formData();
 		const testEmail = formData.get('email')?.toString().trim() ?? '';
-		const template = parseTemplate(formData.get('template'));
+		const slug = formData.get('template')?.toString() ?? '';
 
 		if (!testEmail || !testEmail.includes('@')) {
 			return fail(400, { testError: 'Enter a valid email address' });
 		}
 
-		const { subject, html } = renderTemplate(template, { name: 'Test', now: new Date() });
+		let tpl: Awaited<ReturnType<typeof loadTemplate>>;
+		try {
+			tpl = await loadTemplate(slug);
+		} catch {
+			return fail(400, { testError: `Unknown template: ${slug}` });
+		}
+
+		const { subject, html } = renderLoadedTemplate(tpl, { name: 'Test', now: new Date() });
 
 		const { error } = await resend.emails.send({
 			from: FROM_ADDRESS,
@@ -96,7 +107,14 @@ export const actions: Actions = {
 		}
 
 		const formData = await request.formData();
-		const template = parseTemplate(formData.get('template'));
+		const slug = formData.get('template')?.toString() ?? '';
+
+		let tpl: Awaited<ReturnType<typeof loadTemplate>>;
+		try {
+			tpl = await loadTemplate(slug);
+		} catch {
+			return fail(400, { sendError: `Unknown template: ${slug}` });
+		}
 
 		const { data, error: loadError } = await supabase
 			.from('registrations')
@@ -122,7 +140,7 @@ export const actions: Actions = {
 		for (let i = 0; i < recipients.length; i += BATCH_SIZE) {
 			const chunk = recipients.slice(i, i + BATCH_SIZE);
 			const payload = chunk.map((r) => {
-				const { subject, html } = renderTemplate(template, { name: r.name, now });
+				const { subject, html } = renderLoadedTemplate(tpl, { name: r.name, now });
 				return {
 					from: FROM_ADDRESS,
 					to: r.email,
